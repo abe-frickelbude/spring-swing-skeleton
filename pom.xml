@@ -26,8 +26,7 @@
 		<joda-time.version>2.9.9</joda-time.version>
 		<jackson.version>2.5.2</jackson.version>
 		<jackson.joda.version>2.5.2</jackson.joda.version>
-		<rribbit.version>2.7.0</rribbit.version>
-
+		
 		<org.springframework.version>5.0.2.RELEASE</org.springframework.version>
 		<junit.version>4.12</junit.version>
 
@@ -100,20 +99,7 @@
 			<artifactId>joda-time</artifactId>
 			<version>${joda-time.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.rribbit</groupId>
-			<artifactId>rribbit</artifactId>
-			<version>${rribbit.version}</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
+	
 		<!-- Darcula Look-and-feel -->
 		<dependency>
 			<groupId>bulenkov</groupId>

@@ -1,6 +1,5 @@
 package de.fb.spring.swing.view;
 
-import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -51,10 +50,9 @@ public class HeapMonitorWidget extends JPanel implements Runnable {
 
         heapUsageBar = new JProgressBar();
         heapUsageBar.setStringPainted(true);
-        heapUsageBar.setPreferredSize(new Dimension(100, 16));
+        heapUsageBar.setPreferredSize(new Dimension(100, 28));
         heapUsageBar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         heapUsageBar.setFont(BAR_FONT);
-        heapUsageBar.setForeground(new Color(0, 0, 128));
         heapUsageBar.setMinimum(0);
         heapUsageBar.setMaximum(1);
         heapUsageBar.setString("");
@@ -62,11 +60,12 @@ public class HeapMonitorWidget extends JPanel implements Runnable {
 
         nonHeapUsageBar = new JProgressBar();
         nonHeapUsageBar.setFont(BAR_FONT);
+        nonHeapUsageBar.setPreferredSize(new Dimension(100, 28));
         nonHeapUsageBar.setStringPainted(true);
         nonHeapUsageBar.setString("");
         nonHeapUsageBar.setMinimum(0);
         nonHeapUsageBar.setMaximum(1);
-        nonHeapUsageBar.setForeground(new Color(0, 0, 128));
+        // nonHeapUsageBar.setForeground(new Color(0, 0, 128));
 
         JLabel heapBarLabel = new JLabel("Heap (used/max)");
 

@@ -12,6 +12,7 @@ import com.bulenkov.darcula.DarculaLaf;
 import de.fb.spring.swing.config.AppContextConfiguration;
 import de.fb.spring.swing.view.LogWindow;
 import de.fb.spring.swing.view.MainWindow;
+import de.fb.spring.swing.view.UILayouter;
 
 /**
  * This class essentially ties together Spring application context initialization and any auxiliary initialization of
@@ -48,8 +49,11 @@ public class SpringSwingTemplateApp {
                     // show the UI windows
                     MainWindow mainWindow = appContext.getBean(MainWindow.class);
                     LogWindow logWindow = appContext.getBean(LogWindow.class);
+                    UILayouter uiLayouter = appContext.getBean(UILayouter.class);
 
                     captureSystemMessageStreams(logWindow);
+                    uiLayouter.layoutWindows(false);
+
                     mainWindow.setVisible(true);
                     logWindow.setVisible(true);
 
