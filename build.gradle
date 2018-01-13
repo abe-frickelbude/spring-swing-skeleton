@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'de.frickelbude'
+version = '1.0'
+
+description = """Spring / Swing project template"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories { maven {  url "http://repo.maven.apache.org/maven2"} }
+
+dependencies {
+
+    runtime files('lib/darcula.jar')
+    
+    compile group: 'org.freedesktop.tango', name: 'tango-icon-theme', version:'0.8.90'
+    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.12'
+    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.7.12'
+    compile group: 'org.slf4j', name: 'jul-to-slf4j', version:'1.7.12'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.2.3'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.7'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version:'4.1'
+    compile group: 'commons-io', name: 'commons-io', version:'2.6'
+    compile group: 'joda-time', name: 'joda-time', version:'2.9.9'
+    compile(group: 'org.rribbit', name: 'rribbit', version:'2.7.0') { exclude(module: 'slf4j-api') }
+    compile(group: 'org.springframework', name: 'spring-context', version:'5.0.2.RELEASE') { exclude(module: 'commons-logging') }
+
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testCompile(group: 'org.springframework', name: 'spring-test', version:'5.0.2.RELEASE') { exclude(module: 'commons-logging') }
+}

@@ -8,7 +8,6 @@ import org.apache.commons.io.output.TeeOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import com.bulenkov.darcula.DarculaLaf;
 import de.fb.spring.swing.config.AppContextConfiguration;
 import de.fb.spring.swing.view.LogWindow;
 import de.fb.spring.swing.view.MainWindow;
@@ -69,8 +68,8 @@ public class SpringSwingTemplateApp {
         // Swing "platform look and feel" has to be set PRIOR to any component initialization,
         // otherwise it will have no effect!
         try {
-            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            UIManager.setLookAndFeel(new DarculaLaf());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            // UIManager.setLookAndFeel(new DarculaLaf());
         } catch (Exception ex) {
 
             // Note: this is not an unrecoverable exception - the application will just use the default look and feel!
