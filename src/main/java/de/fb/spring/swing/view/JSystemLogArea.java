@@ -97,7 +97,7 @@ public final class JSystemLogArea extends JTextArea {
     }
 
     @Override
-    public void append(String text) {
+    public void append(final String text) {
 
         if (getLineCount() > maxLines) {
             clear();

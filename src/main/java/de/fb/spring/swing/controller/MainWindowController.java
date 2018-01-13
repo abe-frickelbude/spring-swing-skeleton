@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("unused")
 public class MainWindowController {
 
-    public static final String DB_COMBO_BOX_UPDATE_EVENT = "updateDbBox";
-
     private static Logger logger = LoggerFactory.getLogger(MainWindowController.class);
 
     @Autowired
