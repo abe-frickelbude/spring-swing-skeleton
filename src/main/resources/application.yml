@@ -1,0 +1,50 @@
+
+#######################################################################################################################
+#
+# This is main application configuration profile
+# Some parameters below are configured using environment variables, but also
+# possess default values suitable for local development
+#
+#######################################################################################################################
+
+###################################################### Micronaut ######################################################
+
+micronaut:
+  application:
+    name: micronaut-swing
+#  server:
+#    context-path: ${HTTP_CONTEXT_ROOT:`/`}
+#    port: ${HTTP_SERVER_PORT:8080}
+#    log-handled-exceptions: ${HTTP_LOG_HANDLED_EXCEPTIONS:false}
+#    netty:
+#      compression-level: ${HTTP_COMPRESSION_LEVEL:0}
+#      access-logger:
+#        enabled: ${HTTP_ENABLE_ACCESS_LOG:true}
+#        exclusions:
+#          - "/health"
+#          - "/metrics"
+#        logger-name: "access-log"
+
+  executors:
+    io:
+      core-pool-size: 10
+    scheduled:
+      core-pool-size: 10
+
+  caches:
+    metadata:
+      initial-capacity: 1024
+      expire-after-write: 5m
+      record-stats: true
+
+################################################## Jackson ############################################################
+
+# alternatively this can be configured in code using a @Factory/@Replaces to override
+# the default Jackson object mapper with a custom-configured one
+jackson:
+  bean-introspection-module: true
+  serialization-inclusion: non_null
+  serialization:
+    indent-output: false # pretty-print output
+    write-dates-as-timestamps: false # format datetime objects properly
+  trim-strings: true # trim all incoming strings to clean up some stuff like titles etc.

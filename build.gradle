@@ -1,0 +1,147 @@
+
+// Suppress dependency update checking in IJ
+// Reason: IJ doesn't properly recognize that dependency management is already handled by Micronaut
+// and keeps saying that dependencies can be upgraded even though they're already the correct
+// versions, as defined by the io.micronaut.application plugin
+//file:noinspection GradlePackageUpdate
+
+plugins {
+    id("groovy")
+    id("com.github.ben-manes.versions") version("0.43.0")
+    id("se.patrikerdes.use-latest-versions") version ("0.2.18")
+    id("com.github.johnrengelman.shadow") version("7.1.2")
+    id("io.micronaut.application") version("3.4.0")
+    id("com.adarshr.test-logger") version("3.2.0")
+    id("me.champeau.jmh") version("0.6.8")
+}
+
+version = "1.0.0"
+group = "de.fb"
+
+ext {
+    micronautVersion = '3.7.2'
+    lombokVersion = "1.18.24"
+    //jvipsVersion = "8.12.2-f9dc8c9"
+    jvipsVersion = "8.13.0-cactuslab"
+    commonsLangVersion = "3.12.0"
+    commonsCollectionsVersion = "4.4"
+    commonsCodecVersion = "1.15"
+    jacksonVersion = "2.14.0-rc2"
+    logbackVersion = "1.4.4"
+    deepMockVersion = "3.0.0"
+    groovyVersion = "3.0.13"
+}
+
+repositories {
+
+    mavenLocal() // temporary for overriding JVips with locally installed version
+    maven {
+        name "DW nexus"
+        url "https://nexus.dw.com/repository/maven-public"
+    }
+}
+
+/**
+ * The Micronaut gradle plugin provides the dependency management via micronaut platform BOM
+ * (determined by the version below) and some global platform options such as the choice of
+ * HTTP runtime, test framework etc.
+ */
+micronaut {
+    version("${micronautVersion}")
+    runtime("netty")
+    testRuntime("spock2")
+    enableNativeImage(false)
+    processing {
+        incremental(true)
+        annotations("de.fb.micronaut_swing.*")
+    }
+}
+
+dependencies {
+
+    // ---------------------------------------------------------------------------------------
+
+    /**
+     * Lombok AP must run before all other annotation processors, because its output is
+     * daisy-chained into the other processors
+     */
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+    // ---------------------------------------------------------------------------------------
+
+    implementation("org.apache.commons:commons-lang3:${commonsLangVersion}")
+    implementation("org.apache.commons:commons-collections4:${commonsCollectionsVersion}")
+    implementation("commons-io:commons-io:2.11.0")
+    implementation("commons-codec:commons-codec:${commonsCodecVersion}")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}")
+
+    implementation("com.criteo:jvips:${jvipsVersion}")
+
+    // ------------------------------------ Logging ------------------------------------
+
+    implementation("org.slf4j:jul-to-slf4j:1.7.36")
+    implementation("ch.qos.logback:logback-classic:${logbackVersion}")
+
+    // ------------------------------------ Micronaut -----------------------------------
+
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut:micronaut-management")
+    implementation("io.micronaut.cache:micronaut-cache-caffeine")
+    implementation("io.micronaut.cache:micronaut-cache-management")
+
+    // -------------------------------------- Misc ----------------------------------------
+
+    // added to "suppress" the warning about "warning: unknown enum constant When.MAYBE"
+    compileOnly("com.google.code.findbugs:jsr305")
+
+    // -------------------------------- test dependencies ---------------------------------
+
+    testImplementation("org.codehaus.groovy:groovy-json:${groovyVersion}")
+    testImplementation("io.github.joke:spock-deepmock:${deepMockVersion}")
+}
+
+application {
+    mainClass.set("de.fb.micronaut_swing.MicronautSwingTemplate")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+// [OPS] remove version and classifier from final packaged artifact name for easier deployment
+shadowJar {
+    archiveBaseName.set('micronaut-swing')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
+test {
+
+    /* this effectively disables Gradle task optimization for the "test"
+     * by causing "cleanTest" to always run first. Added to be able to
+     * always run the full test suite from the CLI
+     */
+    dependsOn("cleanTest")
+
+    maxHeapSize = "1G"
+    testlogger {
+        theme 'mocha'
+        showExceptions true
+        showSummary true
+        showSimpleNames true
+        showSkipped false
+        slowThreshold 5000
+    }
+}
+

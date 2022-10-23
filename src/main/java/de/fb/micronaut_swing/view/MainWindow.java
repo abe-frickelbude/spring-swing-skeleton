@@ -1,4 +1,4 @@
-package de.fb.spring.swing.view;
+package de.fb.micronaut_swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -10,11 +10,12 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import de.fb.spring.swing.annotations.SwingView;
-import de.fb.spring.swing.controller.MainWindowController;
+import de.fb.micronaut_swing.annotations.SwingView;
+import de.fb.micronaut_swing.controller.MainWindowController;
 
 @SwingView
 public class MainWindow extends JFrame {
@@ -29,8 +30,7 @@ public class MainWindow extends JFrame {
     public static final String STOP_PROCESSING_EVENT = "stopProcessing";
     public static final String SOURCE_SELECTION_EVENT = "sourceSelected";
 
-    @Autowired
-    private MainWindowController controller;
+    private final MainWindowController controller;
 
     private JButton connectButton;
     private JButton stopButton;
@@ -45,9 +45,11 @@ public class MainWindow extends JFrame {
     /**
      * Create the frame.
      */
-    public MainWindow() {
+    @Inject
+    public MainWindow(final MainWindowController controller) {
 
         super();
+        this.controller = controller;
         initializeUI();
         connectSwingEventHandlers();
 

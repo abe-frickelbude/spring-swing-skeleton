@@ -1,20 +1,16 @@
-package de.fb.spring.swing.view;
+package de.fb.micronaut_swing.view;
 
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-/**
- *
- * @author Ibragim Kuliev
- *
- */
-@Component
+@Singleton
 public final class UILayouter {
 
     private static final Logger log = LoggerFactory.getLogger(UILayouter.class);
@@ -36,11 +32,14 @@ public final class UILayouter {
      */
     private static final int BOTTOM_MARGIN = 100;
 
-    @Autowired
-    private MainWindow mainWindow;
+    private final MainWindow mainWindow;
+    private final LogWindow secondaryWindow;
 
-    @Autowired
-    private LogWindow secondaryWindow;
+    @Inject
+    public UILayouter(final MainWindow mainWindow, final LogWindow secondaryWindow) {
+        this.mainWindow = mainWindow;
+        this.secondaryWindow = secondaryWindow;
+    }
 
     /**
      * Overall strategy for window layout:

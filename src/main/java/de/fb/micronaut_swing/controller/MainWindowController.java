@@ -1,33 +1,33 @@
-package de.fb.spring.swing.controller;
+package de.fb.micronaut_swing.controller;
 
 import java.awt.event.ActionEvent;
+
+import io.micronaut.context.ApplicationContext;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 /**
  * Controller logic for the MainWindow view class.
- * 
+ *
  * @author ibragim
- * 
+ *
  */
-@Component("mainWindowController")
+@Singleton
 @SuppressWarnings("unused")
 public class MainWindowController {
 
-    private static Logger logger = LoggerFactory.getLogger(MainWindowController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MainWindowController.class);
 
-    @Autowired
-    private ApplicationContext appContext;
+    private final ApplicationContext appContext;
 
-    public MainWindowController() {
-
+    @Inject
+    public MainWindowController(final ApplicationContext appContext) {
+        this.appContext = appContext;
     }
 
     public Boolean handleAppRequestExitEvent(final ActionEvent event) {
-
         /*
          * TODO: check for pending and ongoing operations and deny exit (perhaps call back to view)
          * as long as there any active tasks in the queue.

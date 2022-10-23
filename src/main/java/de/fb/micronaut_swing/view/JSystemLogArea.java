@@ -1,4 +1,4 @@
-package de.fb.spring.swing.view;
+package de.fb.micronaut_swing.view;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -10,11 +10,11 @@ import org.apache.commons.lang3.StringUtils;
  * A simple log message display derived from JTextArea which provides two stream endpoints that can be used
  * to dynamically capture the System.out and System.err streams, thereby redirecting console messages into the text
  * area.
- * 
+ *
  * This component should be wrapped in a JScrollPane to provide text scrolling.
- * 
+ *
  * @author ibragim
- * 
+ *
  */
 public final class JSystemLogArea extends JTextArea {
 
@@ -22,9 +22,9 @@ public final class JSystemLogArea extends JTextArea {
 
     /**
      * Small adapter class that automatically appends its content to the parent JTextArea upon each flush().
-     * 
+     *
      * @author ibragim
-     * 
+     *
      */
     private static class MessageOutputStream extends ByteArrayOutputStream {
 
@@ -49,7 +49,7 @@ public final class JSystemLogArea extends JTextArea {
     private MessageOutputStream stdErrStream;
 
     /**
-     * 
+     *
      */
     public JSystemLogArea() {
         super();
@@ -76,7 +76,7 @@ public final class JSystemLogArea extends JTextArea {
 
     /**
      * Return the internal standard output stream object.
-     * 
+     *
      * @return
      */
     public OutputStream getStdOutStream() {
@@ -85,7 +85,7 @@ public final class JSystemLogArea extends JTextArea {
 
     /**
      * Return the internal standard error stream object.
-     * 
+     *
      * @return
      */
     public OutputStream getStdErrStream() {

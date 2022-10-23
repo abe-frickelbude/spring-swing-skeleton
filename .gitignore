@@ -1,4 +1,38 @@
-/.project
-/target/
-/.classpath
-/.settings/
+
+
+# Jetbrains
+.idea
+**/*.iml
+**/*.ipr
+**/*.iws
+**/*.log
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode
+
+# VisualStudio
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Intermediate and output files
+.gradle
+target
+build
+out
+bin
+
+# Misc files
+.DS_Store
+**/scratchpad.txt
+#**/scrapyard
+
+# Logs
+/logs

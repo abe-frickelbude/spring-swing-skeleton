@@ -1,21 +1,20 @@
-package de.fb.spring.swing.view;
+package de.fb.micronaut_swing.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.time.Duration;
+import java.time.OffsetDateTime;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import de.fb.spring.swing.util.TimeFormatUtils;
 
 /**
  * Database statistics panel comprised of a number of fields with fixed names and order.
- * 
+ *
  * @author ibragim
- * 
+ *
  */
 public final class StatisticsPanel extends JPanel {
 
@@ -86,16 +85,17 @@ public final class StatisticsPanel extends JPanel {
     }
 
     public void setStats5(final Duration value) {
-        String formattedTime = TimeFormatUtils.formatDuration(value);
+        String formattedTime = "TODO";
         tableModel.setValueAt(formattedTime, STATS5_POSITION, 1);
     }
 
     public void setStats6(final Duration value) {
-        String formattedTime = TimeFormatUtils.formatDuration(value);
+        String formattedTime = "TODO";
         tableModel.setValueAt(formattedTime, STATS6_POSITION, 1);
     }
 
-    public void setStats7(final DateTime value) {
+    public void setStats7(final OffsetDateTime value) {
+        String formattedTime = "TODO";
         tableModel.setValueAt(value.toString(), STATS7_POSITION, 1);
     }
 

@@ -1,4 +1,4 @@
-package de.fb.spring.swing.view;
+package de.fb.micronaut_swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-import de.fb.spring.swing.annotations.SwingView;
+import de.fb.micronaut_swing.annotations.SwingView;
 
 @SwingView
 public class LogWindow extends JFrame {

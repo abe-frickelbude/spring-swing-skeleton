@@ -1,4 +1,4 @@
-package de.fb.spring.swing.view;
+package de.fb.micronaut_swing.view;
 
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
@@ -175,7 +175,7 @@ public class HeapMonitorWidget extends JPanel implements Runnable {
 
     /**
      * Convert byte values to megabyte units
-     * 
+     *
      * @param bytes
      * @return
      */
@@ -186,7 +186,7 @@ public class HeapMonitorWidget extends JPanel implements Runnable {
     /**
      * Format the information string for the usage bar using the supplied
      * values.
-     * 
+     *
      * @param usedHeap
      * @param maxHeap
      * @return
