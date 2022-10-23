@@ -36,8 +36,7 @@ public class MainWindowController {
     }
 
     public void handleAppExitEvent(final ActionEvent event) {
-
-        // TODO: add any necessary appication context and resources cleanup code
+        // TODO: add any necessary application context and resources cleanup code
         System.exit(0);
     }
 
@@ -57,6 +56,6 @@ public class MainWindowController {
     }
 
     public void handleDatabaseSelectionEvent(final String selectedItem) {
-        logger.info(selectedItem.toString());
+        logger.info(selectedItem);
     }
 }

@@ -1,7 +1,6 @@
 package de.fb.micronaut_swing.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -11,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import de.fb.micronaut_swing.util.Colors;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +38,8 @@ public class MainWindow extends JFrame {
     private JButton exitButton;
 
     private JComboBox<String> sourceSelectionBox;
+
+    private JSimpleDisplayPanel mainDisplayPanel;
 
     // private ProgressReportPanel progressReportPanel;
     // private StatisticsPanel statisticsPanel;
@@ -67,12 +69,24 @@ public class MainWindow extends JFrame {
 
         this.setTitle("SpringFramework / Swing Application Template");
         this.setBounds(100, 100, 776, 765);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout(0, 0));
 
         JPanel leftPane = new JPanel();
         this.getContentPane().add(leftPane, BorderLayout.CENTER);
-        leftPane.setLayout(new BorderLayout(0, 0));
+        leftPane.setLayout(new BorderLayout(10, 10));
+
+        mainDisplayPanel = new JSimpleDisplayPanel();
+        mainDisplayPanel.setBorder(new CompoundBorder(new EmptyBorder(5, 10, 10, 5),
+            new TitledBorder(
+                UIManager.getBorder("TitledBorder.border"), "Output image",
+                TitledBorder.LEADING, TitledBorder.TOP, null)));
+
+        mainDisplayPanel.setCrossHairEnabled(true);
+        mainDisplayPanel.setCrossHairColor(Color.green);
+        mainDisplayPanel.setForegroundColor(Color.green);
+        mainDisplayPanel.setBackgroundColor(Colors.TRANSPARENT);
+        leftPane.add(mainDisplayPanel, BorderLayout.CENTER);
 
         HeapMonitorWidget heapMonitorPanel = new HeapMonitorWidget();
         heapMonitorPanel.setPreferredSize(new Dimension(496, 105));
@@ -95,38 +109,38 @@ public class MainWindow extends JFrame {
         exitButton = new JButton("Exit");
 
         sourceSelectionBox = new JComboBox<>();
-        sourceSelectionBox.setModel(new DefaultComboBoxModel(new String[] {
+        sourceSelectionBox.setModel(new DefaultComboBoxModel(new String[]{
             "No source selected"
         }));
 
         GroupLayout gl_controlPanel = new GroupLayout(controlPanel);
         gl_controlPanel.setHorizontalGroup(
             gl_controlPanel.createParallelGroup(Alignment.LEADING)
-            .addGroup(gl_controlPanel.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(gl_controlPanel.createParallelGroup(Alignment.LEADING)
-                    .addComponent(connectButton, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(stopButton, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(runButton, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(exitButton, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(sourceSelectionBox, 0, 121, Short.MAX_VALUE))
-                .addContainerGap()));
+                .addGroup(gl_controlPanel.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(gl_controlPanel.createParallelGroup(Alignment.LEADING)
+                        .addComponent(connectButton, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                        .addComponent(stopButton, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                        .addComponent(runButton, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                        .addComponent(exitButton, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                        .addComponent(sourceSelectionBox, 0, 121, Short.MAX_VALUE))
+                    .addContainerGap()));
         gl_controlPanel.setVerticalGroup(
             gl_controlPanel.createParallelGroup(Alignment.LEADING)
-            .addGroup(
-                gl_controlPanel.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(connectButton)
-                .addGap(26)
-                .addComponent(sourceSelectionBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                    GroupLayout.PREFERRED_SIZE)
-                .addGap(295)
-                .addComponent(runButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(stopButton, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE)));
+                .addGroup(
+                    gl_controlPanel.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(connectButton)
+                        .addGap(26)
+                        .addComponent(sourceSelectionBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                            GroupLayout.PREFERRED_SIZE)
+                        .addGap(295)
+                        .addComponent(runButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(stopButton, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(168, Short.MAX_VALUE)));
         controlPanel.setLayout(gl_controlPanel);
         heapMonitorPanel.setEnabled(true);
     }
@@ -171,7 +185,6 @@ public class MainWindow extends JFrame {
                 JOptionPane.showMessageDialog(null,
                     "Cannot exit at this time - please shut down first and wait for all pending tasks to complete!",
                     "Exit not possible", JOptionPane.ERROR_MESSAGE);
-                // System.exit(0); // for testing
             }
         });
 
@@ -186,7 +199,6 @@ public class MainWindow extends JFrame {
     // --------------- The following are event handlers used by the controller to update the main view ----------------
 
     private void handleUpdateDbSelectorBox(final List<String> dbNames) {
-
         sourceSelectionBox.setEnabled(false);
         sourceSelectionBox.removeAllItems();
 

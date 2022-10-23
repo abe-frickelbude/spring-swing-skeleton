@@ -16,7 +16,8 @@ public final class UILayouter {
     private static final Logger log = LoggerFactory.getLogger(UILayouter.class);
 
     // window size relative to primary display dimensions, when in multi-display mode
-    private static final float MAIN_WINDOW_SIZE = 0.65f;
+    private static final float MULTI_DISPLAY_MAIN_WINDOW_SIZE = 0.75f;
+
 
     // gap between windows when side-by-side on a single display
     private static final int HORIZONTAL_MARGIN = 10;
@@ -65,13 +66,13 @@ public final class UILayouter {
                 device.getDisplayMode().getHeight());
         }
 
-        if (devices.length > 1 && useMultipleDisplays == true) {
+        if (devices.length > 1 && useMultipleDisplays) {
 
             // we have multiple displays available
             GraphicsDevice defaultDevice = environment.getDefaultScreenDevice();
 
-            int windowWidth = Math.round(defaultDevice.getDisplayMode().getWidth() * MAIN_WINDOW_SIZE);
-            int windowHeight = Math.round(defaultDevice.getDisplayMode().getHeight() * MAIN_WINDOW_SIZE);
+            int windowWidth = Math.round(defaultDevice.getDisplayMode().getWidth() * MULTI_DISPLAY_MAIN_WINDOW_SIZE);
+            int windowHeight = Math.round(defaultDevice.getDisplayMode().getHeight() * MULTI_DISPLAY_MAIN_WINDOW_SIZE);
 
             int windowX = (defaultDevice.getDisplayMode().getWidth() - windowWidth) / 2;
             int windowY = (defaultDevice.getDisplayMode().getHeight() - windowHeight) / 2;
