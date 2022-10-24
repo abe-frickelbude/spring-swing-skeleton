@@ -1,4 +1,4 @@
-package de.fb.micronaut_swing.view;
+package de.fb.jvips_playground.view;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

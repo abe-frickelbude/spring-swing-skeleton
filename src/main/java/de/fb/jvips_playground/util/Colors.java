@@ -1,4 +1,4 @@
-package de.fb.micronaut_swing.util;
+package de.fb.jvips_playground.util;
 
 import java.awt.*;
 

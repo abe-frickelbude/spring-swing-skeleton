@@ -1,4 +1,4 @@
-package de.fb.micronaut_swing.view;
+package de.fb.jvips_playground.view;
 
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;

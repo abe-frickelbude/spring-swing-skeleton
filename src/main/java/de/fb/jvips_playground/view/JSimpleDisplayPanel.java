@@ -1,6 +1,6 @@
-package de.fb.micronaut_swing.view;
+package de.fb.jvips_playground.view;
 
-import de.fb.micronaut_swing.util.Colors;
+import de.fb.jvips_playground.util.Colors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

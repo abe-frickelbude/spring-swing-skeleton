@@ -28,6 +28,10 @@ ext {
     commonsCodecVersion = "1.15"
     jacksonVersion = "2.14.0-rc2"
     logbackVersion = "1.4.4"
+
+    ikonliVersion = "2.1.1"
+    jgoodiesVersion = "1.9.0"
+
     deepMockVersion = "3.0.0"
     groovyVersion = "3.0.13"
 }
@@ -53,7 +57,7 @@ micronaut {
     enableNativeImage(false)
     processing {
         incremental(true)
-        annotations("de.fb.micronaut_swing.*")
+        annotations("de.fb.jvips_playground.*")
     }
 }
 
@@ -80,7 +84,14 @@ dependencies {
 
     implementation("com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}")
 
+    // JVips image processor
     implementation("com.criteo:jvips:${jvipsVersion}")
+
+    // extra UI stuff
+    implementation("com.jgoodies:jgoodies-forms:${jgoodiesVersion}")
+    implementation("org.kordamp.ikonli:ikonli-swing:${ikonliVersion}")
+    implementation("org.kordamp.ikonli:ikonli-octicons-pack:${ikonliVersion}")
+    implementation("org.freeplane.bulenkov:darcula:2021.7")
 
     // ------------------------------------ Logging ------------------------------------
 
@@ -104,6 +115,9 @@ dependencies {
     // added to "suppress" the warning about "warning: unknown enum constant When.MAYBE"
     compileOnly("com.google.code.findbugs:jsr305")
 
+    // for reflection hacks
+    implementation("org.burningwave:core:12.60.3")
+
     // -------------------------------- test dependencies ---------------------------------
 
     testImplementation("org.codehaus.groovy:groovy-json:${groovyVersion}")
@@ -111,7 +125,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("de.fb.micronaut_swing.MicronautSwingTemplate")
+    mainClass.set("de.fb.jvips_playground.JVipsPlaygroundApp")
 }
 
 java {
@@ -121,7 +135,7 @@ java {
 
 // [OPS] remove version and classifier from final packaged artifact name for easier deployment
 shadowJar {
-    archiveBaseName.set('micronaut-swing')
+    archiveBaseName.set('jvips-playground')
     archiveClassifier.set('')
     archiveVersion.set('')
 }

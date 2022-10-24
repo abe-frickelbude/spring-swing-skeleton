@@ -1,4 +1,4 @@
-package de.fb.micronaut_swing.annotations;
+package de.fb.jvips_playground.annotations;
 
 import jakarta.inject.Singleton;
 
