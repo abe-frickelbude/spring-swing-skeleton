@@ -7,15 +7,15 @@ import org.slf4j.LoggerFactory;
 import de.fb.jvips_playground.util.Constants;
 
 /**
- * Extends {@linkplain JAnsiTextPane} with standard IO stream capturing. This allows one to mirror all System.out /
+ * Extends {@linkplain AnsiTextPane} with standard IO stream capturing. This allows one to mirror all System.out /
  * System.err stream output (and by extension also anything that uses them, e.g. every major logging framework)
  *
  * @author Ibragim Kuliev
  *
  */
-public class JConsoleLogPane extends JAnsiTextPane {
+public class ConsoleLogPane extends AnsiTextPane {
 
-    private static final Logger log = LoggerFactory.getLogger(JConsoleLogPane.class);
+    private static final Logger log = LoggerFactory.getLogger(ConsoleLogPane.class);
 
     private static final int DEFAULT_CAPTURE_BUFFER_SIZE = 1024; // 1KB
     private static final int MAX_CONTENT_LENGTH = 2 * Constants.ONE_MEGABYTE;
@@ -32,7 +32,7 @@ public class JConsoleLogPane extends JAnsiTextPane {
     private PrintStream stdOutStream;
     private PrintStream stdErrStream;
 
-    public JConsoleLogPane() {
+    public ConsoleLogPane() {
 
         super();
         captureBufferSize = DEFAULT_CAPTURE_BUFFER_SIZE;

@@ -42,7 +42,7 @@ public class HeapMonitorWidget extends JPanel implements Runnable {
     private AtomicBoolean updateIsActive;
 
     /**
-     * Create the panel.
+     * Create the mainPanel.
      */
     public HeapMonitorWidget() {
 

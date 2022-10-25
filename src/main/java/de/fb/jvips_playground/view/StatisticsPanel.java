@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Database statistics panel comprised of a number of fields with fixed names and order.
+ * Database statistics mainPanel comprised of a number of fields with fixed names and order.
  *
  * @author ibragim
  *

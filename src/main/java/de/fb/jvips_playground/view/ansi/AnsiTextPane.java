@@ -25,13 +25,13 @@ import org.slf4j.LoggerFactory;
  * </p>
  *
  */
-public class JAnsiTextPane extends JTextPane {
+public class AnsiTextPane extends JTextPane {
 
-    private static final Logger log = LoggerFactory.getLogger(JAnsiTextPane.class);
+    private static final Logger log = LoggerFactory.getLogger(AnsiTextPane.class);
 
     private final AnsiCodeProcessor ansiCodeProcessor;
 
-    public JAnsiTextPane() {
+    public AnsiTextPane() {
         super();
         ansiCodeProcessor = new AnsiCodeProcessor();
         ansiCodeProcessor.setColorScheme("/ansi_color_schemes/xterm");

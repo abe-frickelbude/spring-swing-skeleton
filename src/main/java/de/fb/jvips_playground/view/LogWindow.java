@@ -1,7 +1,7 @@
 package de.fb.jvips_playground.view;
 
 import de.fb.jvips_playground.annotations.SwingView;
-import de.fb.jvips_playground.view.ansi.JConsoleLogPane;
+import de.fb.jvips_playground.view.ansi.ConsoleLogPane;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,11 +11,8 @@ import java.awt.*;
 public class LogWindow extends JFrame {
 
     private final JPanel contentPane;
-    private final JConsoleLogPane consoleLogPane;
+    private final ConsoleLogPane consoleLogPane;
 
-    /**
-     * Create the frame.
-     */
     public LogWindow() {
         setTitle("Log console");
 
@@ -27,7 +24,7 @@ public class LogWindow extends JFrame {
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
 
-        consoleLogPane = new JConsoleLogPane();
+        consoleLogPane = new ConsoleLogPane();
 
         // testing
         consoleLogPane.setColorScheme("/ansi_color_schemes/monokai");

@@ -11,13 +11,13 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class JSimpleDisplayPanel extends JComponent implements
+public class SimpleDisplayPanel extends JComponent implements
     ComponentListener,
     MouseListener,
     MouseMotionListener,
     MouseWheelListener {
 
-    private static final Logger log = LoggerFactory.getLogger(JSimpleDisplayPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleDisplayPanel.class);
 
     // mouse coordinates, buttons & modifiers
     private Point mousePosition;
@@ -41,7 +41,7 @@ public class JSimpleDisplayPanel extends JComponent implements
 
     private DecimalFormat numberFormatter; // number formatter
 
-    public JSimpleDisplayPanel() {
+    public SimpleDisplayPanel() {
 
         super();
         this.setDoubleBuffered(true);
@@ -75,7 +75,7 @@ public class JSimpleDisplayPanel extends JComponent implements
 
     /**
      * Returns the menu that controls the appearance of the
-     * display panel. <br>Can be inserted into a {@link JMenuBar}
+     * display mainPanel. <br>Can be inserted into a {@link JMenuBar}
      * in the parent window.
      */
     public JMenu getMenus() {
@@ -195,7 +195,7 @@ public class JSimpleDisplayPanel extends JComponent implements
         if (crossHairEnabled)
             drawCrossHair(ctx);
 
-        // draw mouse coordinate information panel
+        // draw mouse coordinate information mainPanel
         drawMouseStatus(ctx);
     }
 
@@ -229,10 +229,10 @@ public class JSimpleDisplayPanel extends JComponent implements
 
         // keep right text margin at least 10 pixels
         // away from the display border
-        int x = innerBounds.width - width - 10;
+        int x = innerBounds.width - width - 5;
 
         // set y to two text lines' height
-        int y = innerBounds.height - 2 * font_size - 10;
+        int y = innerBounds.height - 2 * font_size - 5;
 
         // make box for text
         // g.setColor(backgroundColor);

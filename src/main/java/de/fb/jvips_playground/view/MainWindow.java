@@ -11,6 +11,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import de.fb.jvips_playground.playground.LayoutTestPanel;
 import de.fb.jvips_playground.util.Colors;
 import de.fb.jvips_playground.util.RenderUtils;
 import jakarta.annotation.PostConstruct;
@@ -37,7 +38,7 @@ public class MainWindow extends JFrame {
 
     private JTabbedPane activityTabPane;
     private JPanel controlPanel;
-    private JSimpleDisplayPanel mainDisplayPanel;
+    private SimpleDisplayPanel mainDisplayPanel;
     private HeapMonitor heapMonitorPanel;
 
     @Inject
@@ -81,7 +82,7 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(leftPane, BorderLayout.CENTER);
         leftPane.setLayout(new BorderLayout(0, 0));
 
-        mainDisplayPanel = new JSimpleDisplayPanel();
+        mainDisplayPanel = new SimpleDisplayPanel();
         mainDisplayPanel.setBorder(new CompoundBorder(new EmptyBorder(5, 10, 10, 5),
             new TitledBorder(
                 UIManager.getBorder("TitledBorder.border"), "Output image",
@@ -102,17 +103,21 @@ public class MainWindow extends JFrame {
 
         createControlPanel();
         this.getContentPane().add(controlPanel, BorderLayout.EAST);
+
+        //var testPanel = new LayoutTestPanel();
+        //this.getContentPane().add(testPanel.getPanel(), BorderLayout.WEST);
     }
 
     private void createControlPanel() {
 
         controlPanel = new JPanel();
 
-        controlPanel.setLayout(new FormLayout(new ColumnSpec[]{
-            FormSpecs.RELATED_GAP_COLSPEC,
-            ColumnSpec.decode("150px:grow"),
-            FormSpecs.RELATED_GAP_COLSPEC,
-        },
+        controlPanel.setLayout(new FormLayout(
+            new ColumnSpec[]{
+                FormSpecs.RELATED_GAP_COLSPEC,
+                ColumnSpec.decode("150px:grow"),
+                FormSpecs.RELATED_GAP_COLSPEC,
+            },
             new RowSpec[]{
                 FormSpecs.RELATED_GAP_ROWSPEC,
                 FormSpecs.DEFAULT_ROWSPEC,

@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class does most of the heavy lifting for {@linkplain JAnsiTextPane}.
+ * This class does most of the heavy lifting for {@linkplain AnsiTextPane}.
  *
  * <p>
  * Idea appropriated from https://stackoverflow.com/questions/6899282/ansi-colors-in-java-swing-text-fields

@@ -40,7 +40,7 @@ public class HeapMonitor extends JPanel {
     private final AtomicInteger updateInterval;
 
     /**
-     * Create the panel.
+     * Create the mainPanel.
      */
     public HeapMonitor() {
 
