@@ -11,7 +11,6 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-import de.fb.jvips_playground.playground.LayoutTestPanel;
 import de.fb.jvips_playground.util.Colors;
 import de.fb.jvips_playground.util.RenderUtils;
 import jakarta.annotation.PostConstruct;
@@ -103,9 +102,6 @@ public class MainWindow extends JFrame {
 
         createControlPanel();
         this.getContentPane().add(controlPanel, BorderLayout.EAST);
-
-        //var testPanel = new LayoutTestPanel();
-        //this.getContentPane().add(testPanel.getPanel(), BorderLayout.WEST);
     }
 
     private void createControlPanel() {

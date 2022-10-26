@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui_designer_sandbox.forms.VipsPlaygroundControls">
+  <grid id="27dc6" binding="controlPanel" layout-manager="FormLayout">
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:8dlu:noGrow"/>
+    <rowspec value="center:8dlu:noGrow"/>
+    <rowspec value="top:14dlu:noGrow"/>
+    <rowspec value="center:27px:noGrow"/>
+    <rowspec value="center:8dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:8dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:6dlu:noGrow"/>
+    <rowspec value="center:6dlu:noGrow"/>
+    <rowspec value="top:14dlu:noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:8dlu:noGrow"/>
+    <rowspec value="center:8dlu:noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:6dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:8dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:8dlu:noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <colspec value="left:10dlu:noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <colspec value="fill:5dlu:noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <constraints>
+      <xy x="20" y="20" width="431" height="691"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="c2c6e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms top="0" left="5" bottom="0" right="0" defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="X"/>
+        </properties>
+      </component>
+      <component id="4fffd" class="javax.swing.JSpinner" binding="overlaySpinnerX">
+        <constraints>
+          <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="2c72a" class="javax.swing.JSpinner" binding="overlaySpinnerY">
+        <constraints>
+          <grid row="10" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="d8d0" class="javax.swing.JLabel" binding="ySpinnerLabel">
+        <constraints>
+          <grid row="10" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Y"/>
+        </properties>
+      </component>
+      <component id="50837" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms top="0" left="5" bottom="0" right="0" defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Width"/>
+        </properties>
+      </component>
+      <component id="b01ed" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="12" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Height"/>
+        </properties>
+      </component>
+      <component id="590b0" class="javax.swing.JSpinner" binding="overlaySpinnerHeight">
+        <constraints>
+          <grid row="12" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="d700d" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="14" column="2" row-span="1" col-span="7" vsize-policy="6" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-7566196"/>
+        </properties>
+      </component>
+      <component id="e2a57" class="javax.swing.JButton" binding="openOverlayImageButton" default-binding="true">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Open overlay image..."/>
+        </properties>
+      </component>
+      <component id="d9dcc" class="javax.swing.JTextField" binding="insetTextField">
+        <constraints>
+          <grid row="17" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="85e6e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="19" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="X"/>
+        </properties>
+      </component>
+      <component id="2a56f" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="19" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Y"/>
+        </properties>
+      </component>
+      <component id="32277" class="javax.swing.JSpinner" binding="insetTextSpinnerX">
+        <constraints>
+          <grid row="19" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="9759a" class="javax.swing.JSpinner" binding="insetTextSpinnerY">
+        <constraints>
+          <grid row="19" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="611a5" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="21" column="2" row-span="1" col-span="7" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-7566196"/>
+        </properties>
+      </component>
+      <component id="8a15b" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="26" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <requestFocusEnabled value="false"/>
+          <text value="X"/>
+        </properties>
+      </component>
+      <component id="d388d" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="26" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Y"/>
+        </properties>
+      </component>
+      <component id="966fd" class="javax.swing.JSpinner" binding="cropSpinnerX">
+        <constraints>
+          <grid row="26" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="1a26" class="javax.swing.JSpinner" binding="cropSpinnerY">
+        <constraints>
+          <grid row="26" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="e3d56" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="28" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Width"/>
+        </properties>
+      </component>
+      <component id="876df" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="28" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Height"/>
+        </properties>
+      </component>
+      <component id="7241f" class="javax.swing.JSpinner" binding="cropSpinnerWidth">
+        <constraints>
+          <grid row="28" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="8990" class="javax.swing.JSpinner" binding="cropSpinnerHeight">
+        <constraints>
+          <grid row="28" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="9657b" class="javax.swing.JSpinner" binding="overlaySpinnerWidth">
+        <constraints>
+          <grid row="12" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="7957f" class="javax.swing.JButton" binding="openInputImageButton" default-binding="true">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Open input image..."/>
+        </properties>
+      </component>
+      <component id="82b81" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="7" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-7566196"/>
+        </properties>
+      </component>
+      <component id="2486f" class="javax.swing.JCheckBox" binding="overlayImageCheckbox">
+        <constraints>
+          <grid row="5" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="e5f22" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <text value="Overlay image"/>
+        </properties>
+      </component>
+      <component id="3e312" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="15" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <text value="Text inset"/>
+        </properties>
+      </component>
+      <component id="69c43" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="23" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Crop rectangle"/>
+        </properties>
+      </component>
+      <component id="c1188" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="31" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Output dimensions"/>
+        </properties>
+      </component>
+      <component id="2096f" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="30" column="2" row-span="1" col-span="7" vsize-policy="6" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-7566196"/>
+        </properties>
+      </component>
+      <component id="897e4" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="33" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Width"/>
+        </properties>
+      </component>
+      <component id="590fc" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
+        <constraints>
+          <grid row="33" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="b8745" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="33" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value="Height"/>
+        </properties>
+      </component>
+      <component id="a7974" class="javax.swing.JSpinner" binding="spinner2" default-binding="true">
+        <constraints>
+          <grid row="33" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="73728" class="javax.swing.JCheckBox" binding="cropCheckbox">
+        <constraints>
+          <grid row="23" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="94e9a" class="javax.swing.JCheckBox" binding="insetTextCheckbox">
+        <constraints>
+          <grid row="15" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="d7075" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Bounds"/>
+        </properties>
+      </component>
+      <component id="5bc87" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="36" column="2" row-span="1" col-span="7" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-7566196"/>
+        </properties>
+      </component>
+      <component id="8d3c5" class="javax.swing.JButton" binding="applyTransformButton" default-binding="true">
+        <constraints>
+          <grid row="39" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Apply transform"/>
+        </properties>
+      </component>
+      <component id="a2b85" class="javax.swing.JButton" binding="saveButton" default-binding="true">
+        <constraints>
+          <grid row="41" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Save..."/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

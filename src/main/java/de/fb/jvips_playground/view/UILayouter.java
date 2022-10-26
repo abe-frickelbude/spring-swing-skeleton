@@ -90,7 +90,7 @@ public final class UILayouter {
 
         final MainWindow mainWindow = appContext.getBean(MainWindow.class);
         final LogWindow logWindow = appContext.getBean(LogWindow.class);
-        //final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
+        final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
 
         int windowWidth = Math.round(defaultDevice.getDisplayMode().getWidth() * MAIN_WINDOW_SIZE);
         int windowHeight = Math.round(defaultDevice.getDisplayMode().getHeight() * MAIN_WINDOW_SIZE);
@@ -113,7 +113,7 @@ public final class UILayouter {
 
         final MainWindow mainWindow = appContext.getBean(MainWindow.class);
         final LogWindow logWindow = appContext.getBean(LogWindow.class);
-        //final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
+        final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
 
         // precalculate left/right/top/bottom margins into the width/height of the layout area
         int displayWidth = defaultDevice.getDisplayMode().getWidth() - (LEFT_MARGIN + RIGHT_MARGIN);
@@ -133,7 +133,7 @@ public final class UILayouter {
             Math.round(displayWidth * (1.0f - widthRatio)) - (HORIZONTAL_GAP + RIGHT_MARGIN),
             Math.round(displayHeight * heightRatio));
 
-        //controlWindow.setBounds(controlWindowBounds);
+        controlWindow.setBounds(controlWindowBounds);
 
         Rectangle logWindowBounds = new Rectangle(
             Math.round(displayWidth * widthRatio) + (HORIZONTAL_GAP + LEFT_MARGIN),
@@ -157,7 +157,7 @@ public final class UILayouter {
 
         final MainWindow mainWindow = appContext.getBean(MainWindow.class);
         final LogWindow logWindow = appContext.getBean(LogWindow.class);
-        //final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
+        final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
 
         mainWindow.addWindowFocusListener(new WindowAdapter() {
 
@@ -166,7 +166,7 @@ public final class UILayouter {
 
                 if (mainWindow.isShowing()) {
                     logWindow.toFront();
-                    //controlWindow.toFront();
+                    controlWindow.toFront();
                 }
             }
         });
@@ -176,15 +176,15 @@ public final class UILayouter {
             @Override
             public void windowIconified(final WindowEvent e) {
                 logWindow.setExtendedState(Frame.ICONIFIED);
-                //controlWindow.setExtendedState(Frame.ICONIFIED);
+                controlWindow.setExtendedState(Frame.ICONIFIED);
             }
 
             @Override
             public void windowDeiconified(final WindowEvent e) {
                 logWindow.setExtendedState(Frame.NORMAL);
-                //controlWindow.setExtendedState(Frame.NORMAL);
+                controlWindow.setExtendedState(Frame.NORMAL);
                 logWindow.toFront();
-                //controlWindow.toFront();
+                controlWindow.toFront();
             }
         });
     }

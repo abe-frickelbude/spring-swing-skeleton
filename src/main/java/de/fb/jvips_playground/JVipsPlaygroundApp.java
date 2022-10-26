@@ -1,6 +1,7 @@
 package de.fb.jvips_playground;
 
 import com.bulenkov.darcula.DarculaLaf;
+import de.fb.jvips_playground.view.ControlWindow;
 import de.fb.jvips_playground.view.LogWindow;
 import de.fb.jvips_playground.view.MainWindow;
 import de.fb.jvips_playground.view.UILayouter;
@@ -58,14 +59,14 @@ public class JVipsPlaygroundApp {
                     // show the UI windows
                     final MainWindow mainWindow = appContext.getBean(MainWindow.class);
                     final LogWindow logWindow = appContext.getBean(LogWindow.class);
-                    //final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
+                    final ControlWindow controlWindow = appContext.getBean(ControlWindow.class);
 
                     UILayouter uiLayouter = appContext.getBean(UILayouter.class);
 
-                    uiLayouter.layoutWindows(false, 0.7f, 0.6f);
+                    uiLayouter.layoutWindows(false, 0.7f, 0.7f);
                     mainWindow.setVisible(true);
                     logWindow.setVisible(true);
-                    //controlWindow.setVisible(true);
+                    controlWindow.setVisible(true);
 
                 } catch (Exception ex) {
                     log.error(ex.getMessage(), ex);
