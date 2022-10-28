@@ -1,13 +1,21 @@
 package de.fb.jvips_playground.util;
 
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import org.kordamp.ikonli.swing.FontIcon;
 
 public final class RenderUtils {
 
+    public static final BasicStroke FAINT_LINE_STROKE;
+
     private RenderUtils() {
 
+    }
+
+    static {
+        FAINT_LINE_STROKE = new BasicStroke(0.5f,
+            BasicStroke.CAP_BUTT,
+            BasicStroke.JOIN_MITER);
     }
 
     /**

@@ -1,6 +1,8 @@
 package de.fb.jvips_playground.view;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +15,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import de.fb.jvips_playground.util.Colors;
 import de.fb.jvips_playground.util.RenderUtils;
+import de.fb.jvips_playground.view.hud.MarkerRectangle;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import org.kordamp.ikonli.octicons.Octicons;
@@ -29,15 +32,12 @@ public class MainWindow extends JFrame {
 
     private final MainWindowController controller;
 
-    private JComboBox<String> sourceSelectionBox;
     private JButton connectButton;
     private JButton exitButton;
-    private JButton stopButton;
-    private JButton runButton;
 
     private JTabbedPane activityTabPane;
     private JPanel controlPanel;
-    private SimpleDisplayPanel mainDisplayPanel;
+    private ImageDisplayPanel imageDisplayPanel;
     private HeapMonitor heapMonitorPanel;
 
     @Inject
@@ -45,9 +45,18 @@ public class MainWindow extends JFrame {
 
         super();
         this.controller = controller;
+        controller.setWindow(this); // feedback channel
+
         // default close does nothing to prevent accidentally shutting down application at an inappropriate time
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         initializeUI();
+    }
+
+    public void setReferenceImage(final BufferedImage image) {
+        EventQueue.invokeLater(() -> {
+            logger.info("Setting main reference image to {}", image.toString());
+            imageDisplayPanel.setMainImage(image);
+        });
     }
 
     @PostConstruct
@@ -81,17 +90,51 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(leftPane, BorderLayout.CENTER);
         leftPane.setLayout(new BorderLayout(0, 0));
 
-        mainDisplayPanel = new SimpleDisplayPanel();
-        mainDisplayPanel.setBorder(new CompoundBorder(new EmptyBorder(5, 10, 10, 5),
-            new TitledBorder(
-                UIManager.getBorder("TitledBorder.border"), "Output image",
-                TitledBorder.LEADING, TitledBorder.TOP, null)));
+        imageDisplayPanel = new ImageDisplayPanel();
+        imageDisplayPanel.setCrossHairEnabled(true);
+        imageDisplayPanel.setAntiAliasingEnabled(true);
+        imageDisplayPanel.setCrossHairColor(Color.green);
+        imageDisplayPanel.setForegroundColor(Color.green);
+        imageDisplayPanel.setBackgroundColor(Colors.TRANSPARENT);
 
-        mainDisplayPanel.setCrossHairEnabled(true);
-        mainDisplayPanel.setCrossHairColor(Color.green);
-        mainDisplayPanel.setForegroundColor(Color.green);
-        mainDisplayPanel.setBackgroundColor(Colors.TRANSPARENT);
-        leftPane.add(mainDisplayPanel, BorderLayout.CENTER);
+        JPanel imageDisplayContainer = new JPanel();
+//        imageDisplayContainer.setBorder(new CompoundBorder(
+//            new EmptyBorder(5, 5, 5, 5),
+//            new CompoundBorder(
+//                new EmptyBorder(10, 10, 10, 10),
+//                //new EmptyBorder(5, 5, 5, 5),
+//                new TitledBorder(
+//                    UIManager.getBorder("TitledBorder.border"), "Output image",
+//                    TitledBorder.LEADING, TitledBorder.TOP, null)
+//            )));
+
+        imageDisplayContainer.setBorder(new CompoundBorder(
+                new EmptyBorder(5, 5, 5, 5),
+                new TitledBorder(
+                    UIManager.getBorder("TitledBorder.border"), "Output image",
+                    TitledBorder.LEADING, TitledBorder.TOP, null)
+            )
+        );
+
+        //imageDisplayPanel.setPreferredSize(new Dimension(800,600));
+        //imageDisplayPanel.setMinimumSize(new Dimension(800,600));
+        //imageDisplayContainer.add(imageDisplayPanel, BorderLayout.CENTER);
+        imageDisplayContainer.setLayout(new BoxLayout(imageDisplayContainer, BoxLayout.X_AXIS));
+        imageDisplayContainer.add(imageDisplayPanel);
+
+        // test
+        // ---------------------------------------------------------------------------------------------------------
+
+//        imageDisplayPanel.addVisualAid(new MarkerRectangle(new Rectangle2D.Double(20,40, 200,200)));
+//        imageDisplayPanel.addVisualAid(new MarkerRectangle(new Rectangle2D.Double(400,400, 200, 100)));
+//
+//        imageDisplayPanel.addVisualAid(new MarkerRectangle(
+//            new Rectangle(150,150, 100,100),
+//            Color.yellow));
+        // ---------------------------------------------------------------------------------------------------------
+
+        //leftPane.add(imageDisplayPanel, BorderLayout.CENTER);
+        leftPane.add(imageDisplayContainer, BorderLayout.CENTER);
 
         createHeapMonitor();
         leftPane.add(heapMonitorPanel, BorderLayout.SOUTH);
@@ -158,25 +201,9 @@ public class MainWindow extends JFrame {
         connectButton.addActionListener((event) -> {
 
         });
-
-//        runButton.addActionListener(event -> {
-//
-//        });
-//
-//        stopButton.addActionListener(event -> {
-//
-//        });
-
         exitButton.addActionListener(event -> {
             showExitDialog();
         });
-
-//        sourceSelectionBox.addItemListener(event -> {
-//            // only send events for the >currently< selected item!
-//            if (event.getItem().equals(sourceSelectionBox.getSelectedItem())) {
-//
-//            }
-//        });
     }
 
     private void showExitDialog() {
@@ -199,4 +226,5 @@ public class MainWindow extends JFrame {
                 "Exit not possible", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }

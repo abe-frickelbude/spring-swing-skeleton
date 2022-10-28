@@ -23,9 +23,9 @@ public final class UILayouter {
     private static final float MAIN_WINDOW_SIZE = 0.65f;
 
     // gap between windows when side-by-side on a single display
-    private static final int HORIZONTAL_GAP = -5;
+    private static final int HORIZONTAL_GAP = 10;
 
-    private static final int VERTICAL_GAP = 2;
+    private static final int VERTICAL_GAP = 10;
 
     private static final int LEFT_MARGIN = 10;
     private static final int RIGHT_MARGIN = 10;
