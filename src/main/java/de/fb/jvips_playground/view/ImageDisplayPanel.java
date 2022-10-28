@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -30,9 +29,6 @@ public class ImageDisplayPanel extends JPanel implements
 
     private Rectangle innerBounds; // adjusted for border etc
     private AffineTransform viewportTransform;
-
-//    private BufferedImage frameBuffer;
-//    private Graphics2D renderer;
 
     private BufferedImage mainImage;
 
@@ -152,7 +148,6 @@ public class ImageDisplayPanel extends JPanel implements
     public void componentShown(ComponentEvent event) {
         SwingUtilities.calculateInnerArea(this, innerBounds);
         calculateViewportTransform();
-        //setupFrameBuffer();
         repaint();
     }
 
@@ -160,7 +155,6 @@ public class ImageDisplayPanel extends JPanel implements
     public void componentResized(ComponentEvent event) {
         SwingUtilities.calculateInnerArea(this, innerBounds);
         calculateViewportTransform();
-        //setupFrameBuffer();
         repaint();
     }
 
@@ -178,12 +172,10 @@ public class ImageDisplayPanel extends JPanel implements
 
     @Override
     public void mousePressed(MouseEvent event) {
-        //if (innerBounds.contains(mousePosition)) {
         mousePosition = event.getPoint();
         mouseButton = event.getButton();
         mouseModifiers = event.getModifiersEx();
         repaint();
-        //}
     }
 
     @Override
@@ -193,19 +185,14 @@ public class ImageDisplayPanel extends JPanel implements
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        //if (innerBounds.contains(mousePosition)) {
         mousePosition.setLocation(event.getPoint());
         repaint();
-        //}
     }
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        // remember current cursor position
-        //if (innerBounds.contains(mousePosition)) {
         mousePosition.setLocation(event.getPoint());
         repaint();
-        //}
     }
 
     @Override
@@ -218,58 +205,44 @@ public class ImageDisplayPanel extends JPanel implements
         viewportTransform.setToTranslation(innerBounds.getX(), innerBounds.getY());
     }
 
-//    private void setupFrameBuffer() {
-//
-//        if (frameBuffer != null) {
-//            renderer.dispose();
-//            frameBuffer.flush();
-//            frameBuffer = null;
-//        }
-//        frameBuffer = (BufferedImage) createImage(this.getWidth(), this.getHeight());
-//        renderer = frameBuffer.createGraphics();
-//
-//        if (antiAliasingEnabled) {
-//            renderer.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//        } else {
-//            renderer.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-//        }
-//    }
-
     private void render(final Graphics2D ctx) {
 
-        //ctx.setTransform(viewportTransform);
-        //clear everything to background color
         ctx.setBackground(backgroundColor);
-        //ctx.clearRect(innerBounds.x, innerBounds.y, innerBounds.width, innerBounds.height);
-        ctx.clearRect(0, 0, innerBounds.width, innerBounds.height);
+        ctx.clearRect(0, 0, getWidth(), getHeight());
 
-        //TODO: draw supplied image
         if (mainImage != null) {
             ctx.drawImage(mainImage, 0, 0, null);
         }
 
-        // draw other elements
+        // temporarily turn on antialiasing for visual aids
+        if (antiAliasingEnabled) {
+            ctx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        }
+
         for (var element : visualAids) {
             element.draw(ctx);
         }
 
         // draw cross-hair
-        if (crossHairEnabled)
+        if (crossHairEnabled) {
             drawCrossHair(ctx);
+        }
 
-        // draw mouse coordinates
         drawMouseStatus(ctx);
+
+        if (antiAliasingEnabled) {
+            ctx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        }
     }
 
     private void drawMouseStatus(final Graphics2D g) {
         // draw mouse coordinates on screen
-        String xText = "X :  " + numberFormatter.format(mousePosition.x);
-        String yText = "Y :  " + numberFormatter.format(mousePosition.y);
+        var xText = "X :  " + mousePosition.x;
+        var yText = "Y :  " + mousePosition.y;
 
-        FontMetrics ff = g.getFontMetrics();
-
-        Rectangle2D xtextBounds = ff.getStringBounds(xText, g);
-        Rectangle2D ytextBounds = ff.getStringBounds(yText, g);
+        var ff = g.getFontMetrics();
+        var xtextBounds = ff.getStringBounds(xText, g);
+        var ytextBounds = ff.getStringBounds(yText, g);
 
         int font_size = g.getFont().getSize();
 
@@ -294,24 +267,11 @@ public class ImageDisplayPanel extends JPanel implements
     private void drawCrossHair(final Graphics2D g) {
 
         g.setColor(crossHairColor);
-        BasicStroke lastStroke = (BasicStroke) g.getStroke();
+
+        var lastStroke = (BasicStroke) g.getStroke();
         g.setStroke(crossHairStroke);
-
-        /*
-         * Since we don't care about the crosshair lines being
-         * overlapped by a potential border, we just draw them using
-         * component width and height.
-         */
-
-//        g.drawLine(innerBounds.x, mousePosition.y,
-//            innerBounds.x + innerBounds.width, mousePosition.y);
-//
-//        g.drawLine(mousePosition.x, innerBounds.y,
-//            mousePosition.x, innerBounds.y + innerBounds.height);
-
-        g.drawLine(0, mousePosition.y, innerBounds.width, mousePosition.y);
-        g.drawLine(mousePosition.x, 0, mousePosition.x, innerBounds.height);
-
+        g.drawLine(0, mousePosition.y, getWidth(), mousePosition.y);
+        g.drawLine(mousePosition.x, 0, mousePosition.x, getHeight());
         g.setStroke(lastStroke);
     }
 

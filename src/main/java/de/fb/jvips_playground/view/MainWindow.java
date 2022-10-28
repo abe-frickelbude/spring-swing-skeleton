@@ -98,16 +98,6 @@ public class MainWindow extends JFrame {
         imageDisplayPanel.setBackgroundColor(Colors.TRANSPARENT);
 
         JPanel imageDisplayContainer = new JPanel();
-//        imageDisplayContainer.setBorder(new CompoundBorder(
-//            new EmptyBorder(5, 5, 5, 5),
-//            new CompoundBorder(
-//                new EmptyBorder(10, 10, 10, 10),
-//                //new EmptyBorder(5, 5, 5, 5),
-//                new TitledBorder(
-//                    UIManager.getBorder("TitledBorder.border"), "Output image",
-//                    TitledBorder.LEADING, TitledBorder.TOP, null)
-//            )));
-
         imageDisplayContainer.setBorder(new CompoundBorder(
                 new EmptyBorder(5, 5, 5, 5),
                 new TitledBorder(
@@ -118,11 +108,9 @@ public class MainWindow extends JFrame {
 
         //imageDisplayPanel.setPreferredSize(new Dimension(800,600));
         //imageDisplayPanel.setMinimumSize(new Dimension(800,600));
-        //imageDisplayContainer.add(imageDisplayPanel, BorderLayout.CENTER);
         imageDisplayContainer.setLayout(new BoxLayout(imageDisplayContainer, BoxLayout.X_AXIS));
         imageDisplayContainer.add(imageDisplayPanel);
 
-        // test
         // ---------------------------------------------------------------------------------------------------------
 
 //        imageDisplayPanel.addVisualAid(new MarkerRectangle(new Rectangle2D.Double(20,40, 200,200)));

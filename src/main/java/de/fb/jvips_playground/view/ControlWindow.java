@@ -106,6 +106,10 @@ public class ControlWindow extends JFrame {
             "jpg", "jpeg", "png");
         chooser.setFileFilter(extFilter);
 
+        var dim = new Dimension(800,600);
+        chooser.setMinimumSize(dim);
+        chooser.setPreferredSize(dim);
+
         if (currentDirectory != null) {
             chooser.setCurrentDirectory(currentDirectory);
         }

@@ -1,5 +1,6 @@
 package de.fb.jvips_playground.service;
 
+import com.criteo.vips.VipsContext;
 import com.criteo.vips.VipsException;
 import com.criteo.vips.VipsImage;
 import com.criteo.vips.enums.VipsImageFormat;
@@ -25,17 +26,20 @@ public class JVipsService {
     private final AtomicReference<VipsImage> currentOverlayImage;
 
     public JVipsService() {
+
+        VipsContext.setLeak(true);
+
         this.currentImage = new AtomicReference<>();
         this.currentOverlayImage = new AtomicReference<>();
     }
 
     public BufferedImage getCurrentReferenceImage() {
 
+        // as it is currently impossible to simply "get at" the image data of a VipsImage,
+        // so just dump to PNG (to avoid additional lossy compression) and use that with
+        // ImageIO.read() to read it back - slow and silly, but this is just for local preview purposes anyway
         BufferedImage refImage = null;
         if (currentImage.get() != null) {
-            // as it is currently impossible to simply "get at" the image data of a VipsImage,
-            // so just dump to PNG (to avoid additional lossy compression) and use that with
-            // ImageIO.read() to read it back - slow and silly, but this is just for local preview purposes anyway
             try {
                 var imageData = currentImage.get().writeToArray(VipsImageFormat.PNG, false);
                 try (var inputStream = new ByteArrayInputStream(imageData)) {
