@@ -83,6 +83,9 @@ public class ImageDisplayPanel extends JPanel implements
 
     public void setMainImage(final BufferedImage image) {
         this.mainImage = image;
+        // update component size for proper scrolling
+        this.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
+        revalidate();
     }
 
     public void setCrossHairColor(Color c) {

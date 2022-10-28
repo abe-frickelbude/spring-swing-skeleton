@@ -97,6 +97,8 @@ public class MainWindow extends JFrame {
         imageDisplayPanel.setForegroundColor(Color.green);
         imageDisplayPanel.setBackgroundColor(Colors.TRANSPARENT);
 
+        JScrollPane imageDisplayScroller = new JScrollPane(imageDisplayPanel);
+
         JPanel imageDisplayContainer = new JPanel();
         imageDisplayContainer.setBorder(new CompoundBorder(
                 new EmptyBorder(5, 5, 5, 5),
@@ -106,10 +108,11 @@ public class MainWindow extends JFrame {
             )
         );
 
-        //imageDisplayPanel.setPreferredSize(new Dimension(800,600));
-        //imageDisplayPanel.setMinimumSize(new Dimension(800,600));
+        // imageDisplayPanel.setPreferredSize(new Dimension(800,600));
+        // imageDisplayPanel.setMinimumSize(new Dimension(800,600));
         imageDisplayContainer.setLayout(new BoxLayout(imageDisplayContainer, BoxLayout.X_AXIS));
-        imageDisplayContainer.add(imageDisplayPanel);
+        //imageDisplayContainer.add(imageDisplayPanel);
+        imageDisplayContainer.add(imageDisplayScroller);
 
         // ---------------------------------------------------------------------------------------------------------
 
