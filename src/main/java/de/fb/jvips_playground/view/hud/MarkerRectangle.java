@@ -39,7 +39,7 @@ public class MarkerRectangle implements VisualAid {
 
         ctx.setBackground(backgroundColor);
         ctx.setColor(foregroundColor);
-        ctx.setStroke(RenderUtils.FAINT_LINE_STROKE);
+        ctx.setStroke(RenderUtils.THICK_LINE_STROKE);
         ctx.draw(rect);
         ctx.setBackground(prevBackground);
         ctx.setColor(prevForeground);

@@ -6,7 +6,6 @@ import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
 
 @Getter
 public class VipsControlPanel {
@@ -29,8 +28,8 @@ public class VipsControlPanel {
     private JCheckBox overlayImageCheckbox;
     private JCheckBox insetTextCheckbox;
     private JCheckBox cropCheckbox;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
+    private JSpinner outputSizeSpinnerX;
+    private JSpinner outputSizeSpinnerY;
     private JButton applyTransformButton;
     private JButton saveButton;
 
@@ -145,13 +144,13 @@ public class VipsControlPanel {
         final JLabel label14 = new JLabel();
         label14.setText("Width");
         controlPanel.add(label14, cc.xy(3, 34, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        spinner1 = new JSpinner();
-        controlPanel.add(spinner1, cc.xy(5, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
+        outputSizeSpinnerX = new JSpinner();
+        controlPanel.add(outputSizeSpinnerX, cc.xy(5, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
         final JLabel label15 = new JLabel();
         label15.setText("Height");
         controlPanel.add(label15, cc.xy(7, 34, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        spinner2 = new JSpinner();
-        controlPanel.add(spinner2, cc.xy(9, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
+        outputSizeSpinnerY = new JSpinner();
+        controlPanel.add(outputSizeSpinnerY, cc.xy(9, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
         cropCheckbox = new JCheckBox();
         cropCheckbox.setText("");
         controlPanel.add(cropCheckbox, cc.xy(9, 24, CellConstraints.RIGHT, CellConstraints.DEFAULT));
@@ -179,44 +178,25 @@ public class VipsControlPanel {
         return controlPanel;
     }
 
+
+
+    @SuppressWarnings("DuplicatedCode")
     private void createUIComponents() {
 
-        // initially disable inputs
-        openOverlayImageButton.setEnabled(false);
-        overlaySpinnerX.setEnabled(false);
-        overlaySpinnerY.setEnabled(false);
-        overlaySpinnerWidth.setEnabled(false);
-        overlaySpinnerHeight.setEnabled(false);
-        insetTextField.setEnabled(false);
-        insetTextSpinnerX.setEnabled(false);
-        insetTextSpinnerY.setEnabled(false);
-        cropSpinnerX.setEnabled(false);
-        cropSpinnerY.setEnabled(false);
-        cropSpinnerWidth.setEnabled(false);
-        cropSpinnerHeight.setEnabled(false);
+        overlaySpinnerX.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        overlaySpinnerY.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        overlaySpinnerWidth.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        overlaySpinnerHeight.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
 
-        overlayImageCheckbox.addItemListener(event -> {
-            var enabled = event.getStateChange() == ItemEvent.SELECTED;
-            openOverlayImageButton.setEnabled(enabled);
-            overlaySpinnerX.setEnabled(enabled);
-            overlaySpinnerY.setEnabled(enabled);
-            overlaySpinnerWidth.setEnabled(enabled);
-            overlaySpinnerHeight.setEnabled(enabled);
-        });
+        insetTextSpinnerX.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        insetTextSpinnerY.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
 
-        insetTextCheckbox.addItemListener(event -> {
-            var enabled = event.getStateChange() == ItemEvent.SELECTED;
-            insetTextField.setEnabled(enabled);
-            insetTextSpinnerX.setEnabled(enabled);
-            insetTextSpinnerY.setEnabled(enabled);
-        });
+        cropSpinnerX.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        cropSpinnerY.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        cropSpinnerWidth.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        cropSpinnerHeight.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
 
-        cropCheckbox.addItemListener(event -> {
-            var enabled = event.getStateChange() == ItemEvent.SELECTED;
-            cropSpinnerX.setEnabled(enabled);
-            cropSpinnerY.setEnabled(enabled);
-            cropSpinnerWidth.setEnabled(enabled);
-            cropSpinnerHeight.setEnabled(enabled);
-        });
+        outputSizeSpinnerX.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        outputSizeSpinnerY.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
     }
 }

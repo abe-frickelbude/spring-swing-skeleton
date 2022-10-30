@@ -1,8 +1,8 @@
 package de.fb.jvips_playground.view;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -15,7 +15,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import de.fb.jvips_playground.util.Colors;
 import de.fb.jvips_playground.util.RenderUtils;
-import de.fb.jvips_playground.view.hud.MarkerRectangle;
+import de.fb.jvips_playground.view.hud.VisualAid;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import org.kordamp.ikonli.octicons.Octicons;
@@ -56,6 +56,13 @@ public class MainWindow extends JFrame {
         EventQueue.invokeLater(() -> {
             logger.info("Setting main reference image to {}", image.toString());
             imageDisplayPanel.setMainImage(image);
+        });
+    }
+
+    public void setVisualAids(final List<VisualAid> visualAids) {
+        EventQueue.invokeLater(() -> {
+            imageDisplayPanel.setVisualAids(visualAids);
+            imageDisplayPanel.repaint();
         });
     }
 

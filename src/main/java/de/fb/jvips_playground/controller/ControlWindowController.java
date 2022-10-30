@@ -38,6 +38,10 @@ public class ControlWindowController {
         return jVipsService.loadOverlaySourceFile(filePath);
     }
 
+    public void onUpdateProcessParameters(final ImageProcessingParams params) {
+        mainWindowController.setProcessParameters(params);
+    }
+
     public void onApplyTransform(final ImageProcessingParams params) {
 
     }

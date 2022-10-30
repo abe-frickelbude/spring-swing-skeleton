@@ -5,11 +5,16 @@ import de.fb.jvips_playground.controller.ControlWindowController;
 import de.fb.jvips_playground.service.ImageProcessingParams;
 import de.fb.jvips_playground.view.controls.VipsControlPanel;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +22,12 @@ import java.util.List;
 @SwingView
 public class ControlWindow extends JFrame {
 
+    private static final Logger log = LoggerFactory.getLogger(ControlWindow.class);
+
     private final VipsControlPanel controlPanel;
     private final List<JComponent> toggleableControls;
+    private final List<JSpinner> spinners;
+
     private final ControlWindowController controller;
 
     private File currentDirectory;
@@ -28,6 +37,7 @@ public class ControlWindow extends JFrame {
         this.controller = controller;
         controlPanel = new VipsControlPanel();
         toggleableControls = new ArrayList<>();
+        spinners = new ArrayList<>();
         initUI();
         connectEventHandlers();
     }
@@ -49,11 +59,64 @@ public class ControlWindow extends JFrame {
 
         contentPane.add(controlPanel.$$$getRootComponent$$$(), BorderLayout.CENTER);
 
+        // initially disable inputs
+        controlPanel.getOpenOverlayImageButton().setEnabled(false);
+        controlPanel.getOverlaySpinnerX().setEnabled(false);
+        controlPanel.getOverlaySpinnerY().setEnabled(false);
+        controlPanel.getOverlaySpinnerWidth().setEnabled(false);
+        controlPanel.getOverlaySpinnerHeight().setEnabled(false);
+        controlPanel.getInsetTextField().setEnabled(false);
+        controlPanel.getInsetTextSpinnerX().setEnabled(false);
+        controlPanel.getInsetTextSpinnerY().setEnabled(false);
+        controlPanel.getCropSpinnerX().setEnabled(false);
+        controlPanel.getCropSpinnerY().setEnabled(false);
+        controlPanel.getCropSpinnerWidth().setEnabled(false);
+        controlPanel.getCropSpinnerHeight().setEnabled(false);
+
+        // conditionally enable/disable controls based on checkboxes
+        controlPanel.getOverlayImageCheckbox().addItemListener(event -> {
+            var enabled = event.getStateChange() == ItemEvent.SELECTED;
+            controlPanel.getOpenOverlayImageButton().setEnabled(enabled);
+            controlPanel.getOverlaySpinnerX().setEnabled(enabled);
+            controlPanel.getOverlaySpinnerY().setEnabled(enabled);
+            controlPanel.getOverlaySpinnerWidth().setEnabled(enabled);
+            controlPanel.getOverlaySpinnerHeight().setEnabled(enabled);
+        });
+
+        controlPanel.getInsetTextCheckbox().addItemListener(event -> {
+            var enabled = event.getStateChange() == ItemEvent.SELECTED;
+            controlPanel.getInsetTextField().setEnabled(enabled);
+            controlPanel.getInsetTextSpinnerX().setEnabled(enabled);
+            controlPanel.getInsetTextSpinnerY().setEnabled(enabled);
+        });
+
+        controlPanel.getCropCheckbox().addItemListener(event -> {
+            var enabled = event.getStateChange() == ItemEvent.SELECTED;
+            controlPanel.getCropSpinnerX().setEnabled(enabled);
+            controlPanel.getCropSpinnerY().setEnabled(enabled);
+            controlPanel.getCropSpinnerWidth().setEnabled(enabled);
+            controlPanel.getCropSpinnerHeight().setEnabled(enabled);
+        });
+
         toggleableControls.add(controlPanel.getOverlayImageCheckbox());
         toggleableControls.add(controlPanel.getInsetTextCheckbox());
         toggleableControls.add(controlPanel.getCropCheckbox());
         toggleableControls.add(controlPanel.getApplyTransformButton());
         toggleableControls.add(controlPanel.getSaveButton());
+
+        spinners.add(controlPanel.getOverlaySpinnerX());
+        spinners.add(controlPanel.getOverlaySpinnerY());
+        spinners.add(controlPanel.getOverlaySpinnerWidth());
+        spinners.add(controlPanel.getOverlaySpinnerHeight());
+        //inputFields.add(controlPanel.getInsetTextField());
+        spinners.add(controlPanel.getInsetTextSpinnerX());
+        spinners.add(controlPanel.getInsetTextSpinnerY());
+        spinners.add(controlPanel.getCropSpinnerX());
+        spinners.add(controlPanel.getCropSpinnerY());
+        spinners.add(controlPanel.getCropSpinnerWidth());
+        spinners.add(controlPanel.getCropSpinnerHeight());
+        spinners.add(controlPanel.getOutputSizeSpinnerX());
+        spinners.add(controlPanel.getOutputSizeSpinnerY());
 
         setControlsEnabled(false);
     }
@@ -84,6 +147,14 @@ public class ControlWindow extends JFrame {
         controlPanel.getApplyTransformButton().addActionListener(event -> {
             controller.onApplyTransform(gatherParams());
         });
+
+        // this is generic - any change event on any of the spinners gathers all
+        // params to simplify the overall logic
+        for (var spinner : spinners) {
+            spinner.addChangeListener(event -> {
+               controller.onUpdateProcessParameters(gatherParams());
+            });
+        }
     }
 
     private ImageProcessingParams gatherParams() {
@@ -94,8 +165,35 @@ public class ControlWindow extends JFrame {
         params.applyCrop(controlPanel.getCropCheckbox().isSelected());
         params.text(controlPanel.getInsetTextField().getText());
 
-        //params.textOrigin(new Point2D.Float(controlPanel.getInsetTextSpinnerX().get))
+        params.overlayBounds(new Rectangle2D.Float(
+           getSpinnerValue(controlPanel.getOverlaySpinnerX()),
+           getSpinnerValue(controlPanel.getOverlaySpinnerY()),
+           getSpinnerValue(controlPanel.getOverlaySpinnerWidth()),
+           getSpinnerValue(controlPanel.getOverlaySpinnerHeight())
+        ));
+
+        params.textOrigin(new Point2D.Float(
+            getSpinnerValue(controlPanel.getInsetTextSpinnerX()),
+            getSpinnerValue(controlPanel.getInsetTextSpinnerY())
+        ));
+
+        params.cropBounds(new Rectangle2D.Float(
+            getSpinnerValue(controlPanel.getCropSpinnerX()),
+            getSpinnerValue(controlPanel.getCropSpinnerY()),
+            getSpinnerValue(controlPanel.getCropSpinnerWidth()),
+            getSpinnerValue(controlPanel.getCropSpinnerHeight())
+        ));
+
+        params.outputDimension(new Dimension(
+           getSpinnerValue(controlPanel.getOutputSizeSpinnerX()),
+           getSpinnerValue(controlPanel.getOutputSizeSpinnerY())
+        ));
+
         return params;
+    }
+
+    private Integer getSpinnerValue(final JSpinner spinner) {
+        return (Integer) spinner.getModel().getValue();
     }
 
     private File openFileDialog() {
@@ -106,7 +204,7 @@ public class ControlWindow extends JFrame {
             "jpg", "jpeg", "png");
         chooser.setFileFilter(extFilter);
 
-        var dim = new Dimension(800,600);
+        var dim = new Dimension(800, 600);
         chooser.setMinimumSize(dim);
         chooser.setPreferredSize(dim);
 

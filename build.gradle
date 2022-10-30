@@ -100,13 +100,13 @@ dependencies {
 
     // ------------------------------------ Micronaut -----------------------------------
 
-    implementation("io.micronaut:micronaut-http-client")
-    implementation("io.micronaut.reactor:micronaut-reactor")
-    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+//    implementation("io.micronaut:micronaut-http-client")
+//    implementation("io.micronaut.reactor:micronaut-reactor")
+//    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 
     implementation("io.micronaut:micronaut-runtime")
-    implementation("io.micronaut:micronaut-validation")
-    implementation("io.micronaut:micronaut-management")
+    //implementation("io.micronaut:micronaut-validation")
+    //implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut.cache:micronaut-cache-caffeine")
     implementation("io.micronaut.cache:micronaut-cache-management")
 

@@ -1,6 +1,7 @@
 package de.fb.jvips_playground.view;
 
 import de.fb.jvips_playground.util.Colors;
+import de.fb.jvips_playground.util.RenderUtils;
 import de.fb.jvips_playground.view.hud.VisualAid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImageDisplayPanel extends JPanel implements
     ComponentListener,
@@ -22,6 +24,7 @@ public class ImageDisplayPanel extends JPanel implements
 
     private static final Logger log = LoggerFactory.getLogger(ImageDisplayPanel.class);
 
+    // <editor-fold desc="component state">
     // mouse coordinates, buttons & modifiers
     private Point mousePosition;
     private int mouseButton;
@@ -43,12 +46,15 @@ public class ImageDisplayPanel extends JPanel implements
 
     private final BasicStroke crossHairStroke;
     private final DecimalFormat numberFormatter;
-    private final java.util.List<VisualAid> visualAids;
+    private java.util.List<VisualAid> visualAids;
+
+    // </editor-fold>
 
     public ImageDisplayPanel() {
 
         super();
         this.setDoubleBuffered(true);
+        this.setAutoscrolls(true);
 
         mousePosition = new Point();
         NumberFormat ff = NumberFormat.getInstance();
@@ -78,7 +84,6 @@ public class ImageDisplayPanel extends JPanel implements
         addMouseMotionListener(this);
         addMouseWheelListener(this);
         addComponentListener(this);
-        createUI();
     }
 
     public void setMainImage(final BufferedImage image) {
@@ -122,6 +127,10 @@ public class ImageDisplayPanel extends JPanel implements
         visualAids.clear();
     }
 
+    public void setVisualAids(final List<VisualAid> aids) {
+        this.visualAids = aids;
+    }
+
     /**
      * WARNING: this does not respect the "offset" coordinate system (i.e. minus borders/insets)
      * and will happily paint under/over them! The whole component should be wrapped e.g. in another
@@ -143,21 +152,21 @@ public class ImageDisplayPanel extends JPanel implements
 
     @Override
     public void componentMoved(ComponentEvent event) {
-        SwingUtilities.calculateInnerArea(this, innerBounds);
-        calculateViewportTransform();
+//        SwingUtilities.calculateInnerArea(this, innerBounds);
+//        calculateViewportTransform();
     }
 
     @Override
     public void componentShown(ComponentEvent event) {
-        SwingUtilities.calculateInnerArea(this, innerBounds);
-        calculateViewportTransform();
+//        SwingUtilities.calculateInnerArea(this, innerBounds);
+//        calculateViewportTransform();
         repaint();
     }
 
     @Override
     public void componentResized(ComponentEvent event) {
-        SwingUtilities.calculateInnerArea(this, innerBounds);
-        calculateViewportTransform();
+//        SwingUtilities.calculateInnerArea(this, innerBounds);
+//        calculateViewportTransform();
         repaint();
     }
 
@@ -189,6 +198,13 @@ public class ImageDisplayPanel extends JPanel implements
     @Override
     public void mouseDragged(MouseEvent event) {
         mousePosition.setLocation(event.getPoint());
+        //if(event.getButton() == MouseEvent.BUTTON2) {
+        // right-clicked -> scroll
+        // works but is kinda glitchy, disabled for now
+        // var rect = new Rectangle(event.getX(), event.getY(), 1,1);
+        // scrollRectToVisible(rect);
+        // log.info("Scrolling to ({},{})", event.getX(), event.getY());
+        //}
         repaint();
     }
 
@@ -222,15 +238,10 @@ public class ImageDisplayPanel extends JPanel implements
             ctx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
 
-        for (var element : visualAids) {
-            element.draw(ctx);
-        }
-
-        // draw cross-hair
+        drawVisualAids(ctx);
         if (crossHairEnabled) {
             drawCrossHair(ctx);
         }
-
         drawMouseStatus(ctx);
 
         if (antiAliasingEnabled) {
@@ -238,49 +249,52 @@ public class ImageDisplayPanel extends JPanel implements
         }
     }
 
-    private void drawMouseStatus(final Graphics2D g) {
+    private void drawVisualAids(final Graphics2D ctx) {
+        for (var element : visualAids) {
+            element.draw(ctx);
+        }
+    }
+
+    private void drawMouseStatus(final Graphics2D ctx) {
+
+        var prevFont = ctx.getFont();
+        ctx.setFont(RenderUtils.BOLD_SYSTEM_FONT);
+
         // draw mouse coordinates on screen
-        var xText = "X :  " + mousePosition.x;
-        var yText = "Y :  " + mousePosition.y;
+        var xText = "X:  " + mousePosition.x;
+        var yText = "Y:  " + mousePosition.y;
+        var ff = ctx.getFontMetrics();
+        var xtextBounds = ff.getStringBounds(xText, ctx);
+        var ytextBounds = ff.getStringBounds(yText, ctx);
 
-        var ff = g.getFontMetrics();
-        var xtextBounds = ff.getStringBounds(xText, g);
-        var ytextBounds = ff.getStringBounds(yText, g);
-
-        int font_size = g.getFont().getSize();
+        int font_size = ctx.getFont().getSize();
 
         int width = (int) Math.max(xtextBounds.getWidth(), ytextBounds.getWidth());
 
-        // keep right text margin at least 10 pixels
-        // away from the display border
-        int x = innerBounds.width - width - 5;
+        // here I cheat a little to always keep the mouse status within the visible rectangle
+        var visibleRect = this.getVisibleRect();
+
+        // keep right text margin at least a few pixels away from the display border
+        int x = visibleRect.width + visibleRect.x - width - 5;
 
         // set y to two text lines' height
-        int y = innerBounds.height - 2 * font_size - 5;
+        int y = visibleRect.height + visibleRect.y - 2 * font_size - 5;
 
-        // make box for text
-        // g.setColor(backgroundColor);
-        // g.fillRect(x - 5, y - font_size, this.getWidth() - x + 10, this.getHeight() - y + font_size);
+        ctx.setColor(foregroundColor);
+        ctx.drawString(xText, x, y);
+        ctx.drawString(yText, x, y + (int) (1.4 * font_size));
 
-        g.setColor(foregroundColor);
-        g.drawString(xText, x, y);
-        g.drawString(yText, x, y + (int) (1.4 * font_size));
+        ctx.setFont(prevFont);
     }
 
-    private void drawCrossHair(final Graphics2D g) {
+    private void drawCrossHair(final Graphics2D ctx) {
 
-        g.setColor(crossHairColor);
-
-        var lastStroke = (BasicStroke) g.getStroke();
-        g.setStroke(crossHairStroke);
-        g.drawLine(0, mousePosition.y, getWidth(), mousePosition.y);
-        g.drawLine(mousePosition.x, 0, mousePosition.x, getHeight());
-        g.setStroke(lastStroke);
-    }
-
-    // create UI elements and set up various UI properties
-    private void createUI() {
-
+        ctx.setColor(crossHairColor);
+        var lastStroke = ctx.getStroke();
+        ctx.setStroke(crossHairStroke);
+        ctx.drawLine(0, mousePosition.y, getWidth(), mousePosition.y);
+        ctx.drawLine(mousePosition.x, 0, mousePosition.x, getHeight());
+        ctx.setStroke(lastStroke);
     }
 }
 
