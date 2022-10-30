@@ -34,6 +34,8 @@ public class ImageDisplayPanel extends JPanel implements
     private AffineTransform viewportTransform;
 
     private BufferedImage mainImage;
+    private BufferedImage overlayImage;
+    private Point overlayImageOrigin;
 
     // ----------------------- UI elements & flags ----------------------------
 
@@ -64,6 +66,7 @@ public class ImageDisplayPanel extends JPanel implements
 
         innerBounds = new Rectangle();
         viewportTransform = new AffineTransform();
+        overlayImageOrigin = new Point(0,0);
 
         visualAids = new ArrayList<>();
 
@@ -91,6 +94,16 @@ public class ImageDisplayPanel extends JPanel implements
         // update component size for proper scrolling
         this.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
         revalidate();
+    }
+
+    public void setOverlayImage(final BufferedImage image) {
+        this.overlayImage = image;
+        repaint();
+    }
+
+    public void setOverlayImageOrigin(final Point origin) {
+        this.overlayImageOrigin = origin;
+        repaint();
     }
 
     public void setCrossHairColor(Color c) {
@@ -129,6 +142,7 @@ public class ImageDisplayPanel extends JPanel implements
 
     public void setVisualAids(final List<VisualAid> aids) {
         this.visualAids = aids;
+        this.repaint();
     }
 
     /**
@@ -231,6 +245,10 @@ public class ImageDisplayPanel extends JPanel implements
 
         if (mainImage != null) {
             ctx.drawImage(mainImage, 0, 0, null);
+        }
+
+        if(overlayImage != null) {
+            ctx.drawImage(overlayImage, overlayImageOrigin.x, overlayImageOrigin.y, null);
         }
 
         // temporarily turn on antialiasing for visual aids

@@ -14,7 +14,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,7 @@ public class ControlWindow extends JFrame {
     @Inject
     public ControlWindow(final ControlWindowController controller) {
         this.controller = controller;
+        controller.setWindow(this);
         controlPanel = new VipsControlPanel();
         toggleableControls = new ArrayList<>();
         spinners = new ArrayList<>();
@@ -125,10 +125,16 @@ public class ControlWindow extends JFrame {
         toggleableControls.forEach(control -> control.setEnabled(enabled));
     }
 
+    // feedback from ControlWindowController when opening an overlay image
+    public void setOverlayDimension(final Dimension dimension) {
+        controlPanel.getOverlaySpinnerWidth().setValue(dimension.width);
+        controlPanel.getOverlaySpinnerHeight().setValue(dimension.height);
+    }
+
     private void connectEventHandlers() {
 
         controlPanel.getOpenInputImageButton().addActionListener(event -> {
-            var inputFile = openFileDialog();
+            var inputFile = openFileDialog(false);
             if (inputFile != null) {
                 var fileLoadOk = controller.onOpenSourceFile(inputFile);
                 if (fileLoadOk) {
@@ -138,7 +144,7 @@ public class ControlWindow extends JFrame {
         });
 
         controlPanel.getOpenOverlayImageButton().addActionListener(event -> {
-            var inputFile = openFileDialog();
+            var inputFile = openFileDialog(false);
             if (inputFile != null) {
                 controller.onOpenOverlaySourceFile(inputFile);
             }
@@ -148,11 +154,18 @@ public class ControlWindow extends JFrame {
             controller.onApplyTransform(gatherParams());
         });
 
+        controlPanel.getSaveButton().addActionListener(event -> {
+            var outputFile = openFileDialog(true);
+            if (outputFile != null) {
+                controller.onSaveToFile(outputFile);
+            }
+        });
+
         // this is generic - any change event on any of the spinners gathers all
         // params to simplify the overall logic
         for (var spinner : spinners) {
             spinner.addChangeListener(event -> {
-               controller.onUpdateProcessParameters(gatherParams());
+                controller.onUpdateProcessParameters(gatherParams());
             });
         }
     }
@@ -165,11 +178,11 @@ public class ControlWindow extends JFrame {
         params.applyCrop(controlPanel.getCropCheckbox().isSelected());
         params.text(controlPanel.getInsetTextField().getText());
 
-        params.overlayBounds(new Rectangle2D.Float(
-           getSpinnerValue(controlPanel.getOverlaySpinnerX()),
-           getSpinnerValue(controlPanel.getOverlaySpinnerY()),
-           getSpinnerValue(controlPanel.getOverlaySpinnerWidth()),
-           getSpinnerValue(controlPanel.getOverlaySpinnerHeight())
+        params.overlayBounds(new Rectangle(
+            getSpinnerValue(controlPanel.getOverlaySpinnerX()),
+            getSpinnerValue(controlPanel.getOverlaySpinnerY()),
+            getSpinnerValue(controlPanel.getOverlaySpinnerWidth()),
+            getSpinnerValue(controlPanel.getOverlaySpinnerHeight())
         ));
 
         params.textOrigin(new Point2D.Float(
@@ -177,16 +190,16 @@ public class ControlWindow extends JFrame {
             getSpinnerValue(controlPanel.getInsetTextSpinnerY())
         ));
 
-        params.cropBounds(new Rectangle2D.Float(
+        params.cropBounds(new Rectangle(
             getSpinnerValue(controlPanel.getCropSpinnerX()),
             getSpinnerValue(controlPanel.getCropSpinnerY()),
             getSpinnerValue(controlPanel.getCropSpinnerWidth()),
             getSpinnerValue(controlPanel.getCropSpinnerHeight())
         ));
 
-        params.outputDimension(new Dimension(
-           getSpinnerValue(controlPanel.getOutputSizeSpinnerX()),
-           getSpinnerValue(controlPanel.getOutputSizeSpinnerY())
+        params.outputSize(new Dimension(
+            getSpinnerValue(controlPanel.getOutputSizeSpinnerX()),
+            getSpinnerValue(controlPanel.getOutputSizeSpinnerY())
         ));
 
         return params;
@@ -196,12 +209,12 @@ public class ControlWindow extends JFrame {
         return (Integer) spinner.getModel().getValue();
     }
 
-    private File openFileDialog() {
+    private File openFileDialog(final boolean asSaveDialog) {
 
         final JFileChooser chooser = new JFileChooser();
         final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Image files",
-            "jpg", "jpeg", "png");
+            "jpg", "jpeg", "png", "webp", "avif", "svg");
         chooser.setFileFilter(extFilter);
 
         var dim = new Dimension(800, 600);
@@ -212,10 +225,19 @@ public class ControlWindow extends JFrame {
             chooser.setCurrentDirectory(currentDirectory);
         }
 
-        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            currentDirectory = chooser.getCurrentDirectory(); // remember last dir
-            return chooser.getSelectedFile();
+        if (asSaveDialog) {
+            if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                currentDirectory = chooser.getCurrentDirectory(); // remember last dir
+                return chooser.getSelectedFile();
+            }
+        } else {
+            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                currentDirectory = chooser.getCurrentDirectory(); // remember last dir
+                return chooser.getSelectedFile();
+            }
         }
+
         return null;
     }
+
 }

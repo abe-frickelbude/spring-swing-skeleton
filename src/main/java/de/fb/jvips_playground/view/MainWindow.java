@@ -59,10 +59,22 @@ public class MainWindow extends JFrame {
         });
     }
 
+    public void setOverlayReferenceImage(final BufferedImage image) {
+        EventQueue.invokeLater(() -> {
+            logger.info("Setting overlay reference image to {}", image.toString());
+            imageDisplayPanel.setOverlayImage(image);
+        });
+    }
+
+    public void setOverlayImageOrigin(final Point origin) {
+        EventQueue.invokeLater(() -> {
+            imageDisplayPanel.setOverlayImageOrigin(origin);
+        });
+    }
+
     public void setVisualAids(final List<VisualAid> visualAids) {
         EventQueue.invokeLater(() -> {
             imageDisplayPanel.setVisualAids(visualAids);
-            imageDisplayPanel.repaint();
         });
     }
 

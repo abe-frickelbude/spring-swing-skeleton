@@ -38,6 +38,10 @@ public class MainWindowController {
         mainWindow.setReferenceImage(image);
     }
 
+    public void setOverlayReferenceImage(final BufferedImage image) {
+        mainWindow.setOverlayReferenceImage(image);
+    }
+
     public void setProcessParameters(final ImageProcessingParams params) {
 
         var visualAids = new ArrayList<VisualAid>();
@@ -49,6 +53,7 @@ public class MainWindowController {
             Color.CYAN));
 
         mainWindow.setVisualAids(visualAids);
+        mainWindow.setOverlayImageOrigin(params.overlayBounds().getLocation());
     }
 
     public Boolean requestAppExit() {
