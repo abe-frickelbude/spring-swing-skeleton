@@ -18,4 +18,5 @@ public class ImageProcessingParams {
     private Point2D textOrigin;
     private Rectangle cropBounds;
     private Dimension outputSize;
+    private Integer avifCompressionSpeed;
 }

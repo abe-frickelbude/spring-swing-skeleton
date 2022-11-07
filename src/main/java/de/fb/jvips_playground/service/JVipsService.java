@@ -5,13 +5,17 @@ import com.criteo.vips.VipsException;
 import com.criteo.vips.VipsImage;
 import com.criteo.vips.enums.VipsBlendMode;
 import com.criteo.vips.enums.VipsImageFormat;
+import com.criteo.vips.enums.VipsKernel;
 import com.criteo.vips.options.Composite2Options;
 import com.criteo.vips.options.ResizeOptions;
+import com.criteo.vips.options.ThumbnailImageOptions;
+import com.criteo.vips.options.ThumbnailOptions;
 import de.fb.jvips_playground.util.LogUtils;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,10 +35,12 @@ public class JVipsService {
 
     private final AtomicReference<VipsImage> currentImage;
     private final AtomicReference<VipsImage> currentOverlayImage;
+    private final StopWatch stopWatch;
 
     public JVipsService() {
 
         VipsContext.setLeak(true);
+        this.stopWatch = new StopWatch();
         this.currentImage = new AtomicReference<>();
         this.currentOverlayImage = new AtomicReference<>();
     }
@@ -75,10 +81,16 @@ public class JVipsService {
                 // 2) apply overlay
                 if (params.applyOverlay() && currentOverlayImage.get() != null) {
 
+                    var overlayImage = currentOverlayImage.get();
+
                     int x0 = params.overlayBounds().x;
                     int y0 = params.overlayBounds().y;
                     log.info("Applying overlay image at ({},{})", x0, y0);
 
+                    //overlayImage.colourspace(VipsInterpretation.Srgb);
+                    //overlayImage.applyPremultiply();
+
+                    var compositingSpace = sourceImage.getInterpretation();
                     sourceImage.applyComposite2(
                         currentOverlayImage.get(),
                         VipsBlendMode.Over,
@@ -94,9 +106,15 @@ public class JVipsService {
 
                 // 4) scale to target dimensions
                 var outputSize = params.outputSize();
-                if(outputSize.width != 0 && outputSize.height != 0) {
+                if (outputSize.width != 0 && outputSize.height != 0) {
                     // using default ResizeOptions -> can be fine-tuned
-                    sourceImage.applyResize(0.5);
+
+                    float xscale = (float) outputSize.width / sourceImage.getWidth();
+                    float yscale = (float) outputSize.height / sourceImage.getHeight();
+                    float scaleFactor = Math.max(xscale, yscale);
+                    sourceImage.applyResize(scaleFactor, new ResizeOptions().kernel(VipsKernel.Lanczos3));
+
+                    //ThumbnailImageOptions
                 }
 
             } catch (VipsException ex) {
@@ -137,10 +155,10 @@ public class JVipsService {
 
     public boolean loadOverlaySourceFile(final String filePath) {
         try {
-            var image = new VipsImage(filePath);
             if (currentOverlayImage.get() != null) {
                 currentOverlayImage.get().release(); // release previous image
             }
+            var image = new VipsImage(filePath);
             currentOverlayImage.set(image);
             log.info("Loaded overlay image {}, original size: {}x{}", filePath, image.getWidth(), image.getHeight());
             return true;
@@ -170,6 +188,8 @@ public class JVipsService {
             var image = currentImage.get();
             try {
 
+                stopWatch.reset();
+                stopWatch.start();
                 switch (extension) {
 
                     case "jpg": {
@@ -190,8 +210,7 @@ public class JVipsService {
                     break;
 
                     case "avif": {
-                        byte[] imageData = image.writeAVIFToArray(30, false, 7);
-                        FileUtils.writeByteArrayToFile(targetFile, imageData);
+                        saveToAvif(image, targetFile);
                     }
                     break;
 
@@ -200,9 +219,26 @@ public class JVipsService {
                         break;
                 }
 
+                if (stopWatch.isStarted()) {
+                    stopWatch.stop();
+                }
+                log.info("Saving took {}", stopWatch.formatTime());
+
             } catch (VipsException | IOException ex) {
                 log.error(ex.getMessage(), ex);
             }
+        }
+    }
+
+    private void saveToAvif(final VipsImage image, final File targetFile) throws IOException {
+
+        for (int speed = 0; speed <= 9; speed++) {
+            stopWatch.reset();
+            stopWatch.start();
+            byte[] imageData = image.writeAVIFToArray(50, false, speed);
+            FileUtils.writeByteArrayToFile(targetFile, imageData);
+            stopWatch.stop();
+            log.info("Writing to AVIF with speed {} took {}", speed, stopWatch.formatTime());
         }
     }
 }

@@ -115,8 +115,11 @@ public class ControlWindow extends JFrame {
         spinners.add(controlPanel.getCropSpinnerY());
         spinners.add(controlPanel.getCropSpinnerWidth());
         spinners.add(controlPanel.getCropSpinnerHeight());
-        spinners.add(controlPanel.getOutputSizeSpinnerX());
-        spinners.add(controlPanel.getOutputSizeSpinnerY());
+        spinners.add(controlPanel.getOutputSizeSpinnerWidth());
+        spinners.add(controlPanel.getOutputSizeSpinnerHeight());
+
+        // currently unused
+        controlPanel.getAvifSpeedSpinner().setEnabled(false);
 
         setControlsEnabled(false);
     }
@@ -178,6 +181,8 @@ public class ControlWindow extends JFrame {
         params.applyCrop(controlPanel.getCropCheckbox().isSelected());
         params.text(controlPanel.getInsetTextField().getText());
 
+        //params.avifCompressionSpeed(getSpinnerValue(controlPanel.getAvifSpeedSpinner()));
+
         params.overlayBounds(new Rectangle(
             getSpinnerValue(controlPanel.getOverlaySpinnerX()),
             getSpinnerValue(controlPanel.getOverlaySpinnerY()),
@@ -198,8 +203,8 @@ public class ControlWindow extends JFrame {
         ));
 
         params.outputSize(new Dimension(
-            getSpinnerValue(controlPanel.getOutputSizeSpinnerX()),
-            getSpinnerValue(controlPanel.getOutputSizeSpinnerY())
+            getSpinnerValue(controlPanel.getOutputSizeSpinnerWidth()),
+            getSpinnerValue(controlPanel.getOutputSizeSpinnerHeight())
         ));
 
         return params;

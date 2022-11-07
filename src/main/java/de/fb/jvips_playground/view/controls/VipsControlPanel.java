@@ -28,10 +28,11 @@ public class VipsControlPanel {
     private JCheckBox overlayImageCheckbox;
     private JCheckBox insetTextCheckbox;
     private JCheckBox cropCheckbox;
-    private JSpinner outputSizeSpinnerX;
-    private JSpinner outputSizeSpinnerY;
+    private JSpinner outputSizeSpinnerWidth;
+    private JSpinner outputSizeSpinnerHeight;
     private JButton applyTransformButton;
     private JButton saveButton;
+    private JSpinner avifSpeedSpinner;
 
     public VipsControlPanel() {
         createUIComponents();
@@ -53,7 +54,7 @@ public class VipsControlPanel {
      */
     private void $$$setupUI$$$() {
         controlPanel = new JPanel();
-        controlPanel.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:10dlu:noGrow,fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,fill:5dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:8dlu:noGrow,center:8dlu:noGrow,top:14dlu:noGrow,center:27px:noGrow,center:8dlu:noGrow,center:max(d;4px):noGrow,center:8dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:6dlu:noGrow,center:6dlu:noGrow,top:14dlu:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:8dlu:noGrow,center:8dlu:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:max(d;4px):noGrow,center:6dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:8dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,top:4dlu:noGrow,center:8dlu:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:max(d;4px):noGrow"));
+        controlPanel.setLayout(new FormLayout("fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:10dlu:noGrow,fill:max(d;4px):noGrow,left:4dlu:noGrow,fill:d:grow,fill:5dlu:noGrow,fill:max(d;4px):noGrow", "center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:8dlu:noGrow,center:8dlu:noGrow,top:14dlu:noGrow,center:27px:noGrow,center:8dlu:noGrow,center:max(d;4px):noGrow,center:8dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:6dlu:noGrow,center:6dlu:noGrow,top:14dlu:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:8dlu:noGrow,center:8dlu:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:max(d;4px):noGrow,center:6dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:8dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:8dlu:noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,center:max(d;4px):noGrow"));
         final JLabel label1 = new JLabel();
         label1.setText("X");
         CellConstraints cc = new CellConstraints();
@@ -110,7 +111,7 @@ public class VipsControlPanel {
         controlPanel.add(label8, cc.xy(3, 29, CellConstraints.RIGHT, CellConstraints.DEFAULT));
         final JLabel label9 = new JLabel();
         label9.setText("Height");
-        controlPanel.add(label9, cc.xy(7, 29));
+        controlPanel.add(label9, cc.xy(7, 29, CellConstraints.RIGHT, CellConstraints.DEFAULT));
         cropSpinnerWidth = new JSpinner();
         controlPanel.add(cropSpinnerWidth, cc.xy(5, 29, CellConstraints.FILL, CellConstraints.DEFAULT));
         cropSpinnerHeight = new JSpinner();
@@ -144,13 +145,13 @@ public class VipsControlPanel {
         final JLabel label14 = new JLabel();
         label14.setText("Width");
         controlPanel.add(label14, cc.xy(3, 34, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        outputSizeSpinnerX = new JSpinner();
-        controlPanel.add(outputSizeSpinnerX, cc.xy(5, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
+        outputSizeSpinnerWidth = new JSpinner();
+        controlPanel.add(outputSizeSpinnerWidth, cc.xy(5, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
         final JLabel label15 = new JLabel();
         label15.setText("Height");
         controlPanel.add(label15, cc.xy(7, 34, CellConstraints.RIGHT, CellConstraints.DEFAULT));
-        outputSizeSpinnerY = new JSpinner();
-        controlPanel.add(outputSizeSpinnerY, cc.xy(9, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
+        outputSizeSpinnerHeight = new JSpinner();
+        controlPanel.add(outputSizeSpinnerHeight, cc.xy(9, 34, CellConstraints.FILL, CellConstraints.DEFAULT));
         cropCheckbox = new JCheckBox();
         cropCheckbox.setText("");
         controlPanel.add(cropCheckbox, cc.xy(9, 24, CellConstraints.RIGHT, CellConstraints.DEFAULT));
@@ -162,13 +163,18 @@ public class VipsControlPanel {
         controlPanel.add(label16, cc.xy(3, 9));
         final JSeparator separator5 = new JSeparator();
         separator5.setForeground(new Color(-7566196));
-        controlPanel.add(separator5, cc.xyw(3, 37, 7, CellConstraints.FILL, CellConstraints.FILL));
+        controlPanel.add(separator5, cc.xyw(3, 39, 7, CellConstraints.FILL, CellConstraints.FILL));
         applyTransformButton = new JButton();
         applyTransformButton.setText("Apply transform");
-        controlPanel.add(applyTransformButton, cc.xyw(3, 40, 7));
+        controlPanel.add(applyTransformButton, cc.xyw(3, 42, 7));
         saveButton = new JButton();
         saveButton.setText("Save...");
-        controlPanel.add(saveButton, cc.xyw(3, 42, 7));
+        controlPanel.add(saveButton, cc.xyw(3, 44, 7));
+        avifSpeedSpinner = new JSpinner();
+        controlPanel.add(avifSpeedSpinner, cc.xy(9, 37, CellConstraints.FILL, CellConstraints.DEFAULT));
+        final JLabel label17 = new JLabel();
+        label17.setText("AVIF speed");
+        controlPanel.add(label17, cc.xy(7, 37, CellConstraints.RIGHT, CellConstraints.DEFAULT));
     }
 
     /**
@@ -196,7 +202,9 @@ public class VipsControlPanel {
         cropSpinnerWidth.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
         cropSpinnerHeight.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
 
-        outputSizeSpinnerX.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
-        outputSizeSpinnerY.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        outputSizeSpinnerWidth.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+        outputSizeSpinnerHeight.setModel(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+
+        avifSpeedSpinner.setModel(new SpinnerNumberModel(0, 0,9,1));
     }
 }
